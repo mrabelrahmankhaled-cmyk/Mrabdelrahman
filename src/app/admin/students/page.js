@@ -679,7 +679,8 @@ const result = await response.json();
         const originalStudent = studentsData?.students?.find(s => s.id === targetEditId) || { id: targetEditId };
         
         // 🧐 فحص هل هذا حساب Quick Add يحتاج تفعيل؟
-        const needsActivation = !originalStudent?.unique_id || !originalStudent?.access_code || originalStudent?.access_code === '0';
+        // لا نحتاج للتفعيل إذا كنا نقوم بضم طالب أونلاين (لأنه يمتلك حساب بالفعل)
+        const needsActivation = !linkOnlineStudentId && (!originalStudent?.unique_id || !originalStudent?.access_code || originalStudent?.access_code === '0');
 
         if (needsActivation) {
             // 🔒 حماية التفعيل: لو حاول يفعل حساب "إضافة سريعة" وهو معندوش الصلاحية
@@ -688,7 +689,7 @@ const result = await response.json();
                 setIsSubmitting(false);
                 return;
             }
-          }
+        }
 
         if (needsActivation) {
             console.log("🛠️ جاري تفعيل حساب Quick Add...");
@@ -708,7 +709,7 @@ const result = await response.json();
                 method: 'PUT', 
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({
-                    id: editId, 
+                    id: targetEditId, 
                     ...dataToSave,
                     unique_id: uniqueId,
                     access_code: accessCode,
@@ -728,6 +729,16 @@ const result = await response.json();
             }
 
         } else {
+            // إذا كان طالب أونلاين مسجل قديماً وليس له كود سنتر، نولد له كود
+            if (linkOnlineStudentId) {
+                if (!dataToSave.unique_id) {
+                    dataToSave.unique_id = "S-" + Math.floor(1000 + Math.random() * 9000);
+                }
+                if (!dataToSave.access_code) {
+                    dataToSave.access_code = Math.floor(1000 + Math.random() * 9000).toString();
+                }
+            }
+
             // 🚗 سيناريو التعديل العادي أو ضم طالب أونلاين: داتابيز بس
             const { error: updateError } = await supabaseBrowser
               .from('students')
