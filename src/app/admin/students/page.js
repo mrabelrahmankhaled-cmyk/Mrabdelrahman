@@ -201,7 +201,8 @@ export default function StudentsPage() {
         supabaseBrowser
           .from('courses')
           .select('id, name, grade, price, digital_price, digital_full_price, instructors(id, name)')
-          .eq('center_id', centerId),
+          .eq('center_id', centerId)
+          .neq('is_online_only', true),
 
         supabaseBrowser
           .from('groups')
@@ -425,11 +426,12 @@ const handleSubmit = async (e) => {
 // 🚨 --- بداية التفتيش الذكي المتقدم (بالـ Pro Modal) --- 🚨
       
       // 1. فحص رقم الطالب (Pro Modal أحمر للتحذير)
+      let linkOnlineStudentId = null;
+
       if (cleanPhone !== '') {
           let phoneQuery = supabaseBrowser
             .from('students')
-            .select('id, name')
-            .eq('center_id', centerId)
+            .select('id, name, center_id')
             .or(`phone.eq.${cleanPhone},parent_phone.eq.${cleanPhone}`);
             
           if (isEditing && editId) phoneQuery = phoneQuery.neq('id', editId); 
@@ -437,42 +439,65 @@ const handleSubmit = async (e) => {
           const { data: phoneCheck } = await phoneQuery.limit(1).maybeSingle();
 
           if (phoneCheck) {
-              const forceAdd = await new Promise((resolve) => {
-                  toast.custom((t) => (
-                      <div className="bg-white p-5 rounded-3xl shadow-2xl border-2 border-red-100 max-w-sm w-full animate-fade-in" dir="rtl">
-                          <div className="flex items-center gap-3 mb-3">
-                              <div className="bg-red-50 text-red-500 w-10 h-10 rounded-full flex items-center justify-center text-xl shrink-0">
-                                  ⚠️
+              if (phoneCheck.center_id === centerId) {
+                  // طالب موجود في نفس السنتر
+                  const forceAdd = await new Promise((resolve) => {
+                      toast.custom((t) => (
+                          <div className="bg-white p-5 rounded-3xl shadow-2xl border-2 border-red-100 max-w-sm w-full animate-fade-in" dir="rtl">
+                              <div className="flex items-center gap-3 mb-3">
+                                  <div className="bg-red-50 text-red-500 w-10 h-10 rounded-full flex items-center justify-center text-xl shrink-0">⚠️</div>
+                                  <h3 className="text-sm font-black text-gray-800">تحذير: رقم الطالب مكرر!</h3>
                               </div>
-                              <h3 className="text-sm font-black text-gray-800">تحذير: رقم الطالب مكرر!</h3>
+                              <p className="text-xs text-gray-600 mb-2 font-bold leading-relaxed">
+                                  هذا الرقم مسجل مسبقاً باسم: <span className="text-red-600 text-sm">{phoneCheck.name}</span>
+                              </p>
+                              <p className="text-xs text-gray-800 mb-4 font-bold bg-gray-50 p-2 rounded-lg">
+                                  في العادة كل طالب له رقم مستقل. هل أنتِ متأكدة من تجاهل التحذير وتسجيل الطالب بنفس الرقم؟
+                              </p>
+                              <div className="flex flex-col gap-2">
+                                  <button onClick={() => { toast.dismiss(t.id); resolve(true); }} className="w-full bg-red-50 text-red-600 border border-red-100 py-2.5 rounded-xl text-xs font-black hover:bg-red-100 transition shadow-sm">✅ نعم، متأكدة (تجاهل وتسجيل)</button>
+                                  <button onClick={() => { toast.dismiss(t.id); resolve(false); }} className="w-full bg-gray-100 text-gray-600 py-2.5 rounded-xl text-xs font-black hover:bg-gray-200 transition">❌ إلغاء لمراجعة الرقم</button>
+                              </div>
                           </div>
-                          <p className="text-xs text-gray-600 mb-2 font-bold leading-relaxed">
-                              هذا الرقم مسجل مسبقاً باسم: <span className="text-red-600 text-sm">{phoneCheck.name}</span>
-                          </p>
-                          <p className="text-xs text-gray-800 mb-4 font-bold bg-gray-50 p-2 rounded-lg">
-                              في العادة كل طالب له رقم مستقل. هل أنتِ متأكدة من تجاهل التحذير وتسجيل الطالب بنفس الرقم؟
-                          </p>
-                          <div className="flex flex-col gap-2">
-                              <button
-                                  onClick={() => { toast.dismiss(t.id); resolve(true); }}
-                                  className="w-full bg-red-50 text-red-600 border border-red-100 py-2.5 rounded-xl text-xs font-black hover:bg-red-100 transition shadow-sm"
-                              >
-                                  ✅ نعم، متأكدة (تجاهل وتسجيل)
-                              </button>
-                              <button
-                                  onClick={() => { toast.dismiss(t.id); resolve(false); }}
-                                  className="w-full bg-gray-100 text-gray-600 py-2.5 rounded-xl text-xs font-black hover:bg-gray-200 transition"
-                              >
-                                  ❌ إلغاء لمراجعة الرقم
-                              </button>
+                      ), { duration: Infinity, position: 'top-center' });
+                  });
+                  
+                  if (!forceAdd) {
+                      setIsSubmitting(false);
+                      return; // ⛔ وقّف التسجيل
+                  }
+              } else if (!phoneCheck.center_id) {
+                  // طالب مسجل أونلاين على المنصة بدون سنتر
+                  const linkAdd = await new Promise((resolve) => {
+                      toast.custom((t) => (
+                          <div className="bg-white p-5 rounded-3xl shadow-2xl border-2 border-purple-100 max-w-sm w-full animate-fade-in" dir="rtl">
+                              <div className="flex items-center gap-3 mb-3">
+                                  <div className="bg-purple-50 text-purple-500 w-10 h-10 rounded-full flex items-center justify-center text-xl shrink-0">🌐</div>
+                                  <h3 className="text-sm font-black text-gray-800">طالب أونلاين مسجل</h3>
+                              </div>
+                              <p className="text-xs text-gray-600 mb-2 font-bold leading-relaxed">
+                                  الطالب <span className="text-purple-600 text-sm">{phoneCheck.name}</span> مسجل في المنصة كطالب أونلاين.
+                              </p>
+                              <p className="text-xs text-gray-800 mb-4 font-bold bg-gray-50 p-2 rounded-lg">
+                                  هل تريد ضمه لطلاب السنتر وتحديث بياناته بالبيانات المدخلة الآن؟
+                              </p>
+                              <div className="flex flex-col gap-2">
+                                  <button onClick={() => { toast.dismiss(t.id); resolve(true); }} className="w-full bg-purple-50 text-purple-600 border border-purple-100 py-2.5 rounded-xl text-xs font-black hover:bg-purple-100 transition shadow-sm">✅ نعم، ضمه للسنتر</button>
+                                  <button onClick={() => { toast.dismiss(t.id); resolve(false); }} className="w-full bg-gray-100 text-gray-600 py-2.5 rounded-xl text-xs font-black hover:bg-gray-200 transition">❌ لا، إلغاء</button>
+                              </div>
                           </div>
-                      </div>
-                  ), { duration: Infinity, position: 'top-center' });
-              });
-              
-              if (!forceAdd) {
-                  setIsSubmitting(false);
-                  return; // ⛔ وقّف التسجيل
+                      ), { duration: Infinity, position: 'top-center' });
+                  });
+
+                  if (!linkAdd) {
+                      setIsSubmitting(false);
+                      return; 
+                  } else {
+                      linkOnlineStudentId = phoneCheck.id; // سيتم تحديثه بدلاً من إنشائه
+                  }
+              } else {
+                  // الطالب مسجل في سنتر آخر، ممكن نمنعه أو نسمح بإنشاء حساب جديد
+                  toast.error("هذا الرقم مسجل في سنتر آخر، سيتم إنشاء حساب جديد منفصل لهذا الطالب في السنتر الخاص بك.", { duration: 6000 });
               }
           }
       }
@@ -569,10 +594,9 @@ const handleSubmit = async (e) => {
       // 🔒 قفل البيزنس: هل السنتر يمتلك صلاحية المنصة؟
       const hasPortalAccess = allowedFeatures.includes('action_student_portal');
 
-      if (!isEditing) {
-        // --- أ- توليد بيانات الدخول (حالة الإضافة الجديدة) ---
+      if (!isEditing && !linkOnlineStudentId) {
+        // --- أ- توليد بيانات الدخول (حالة الإضافة الجديدة تماماً) ---
         const uniqueId = "S-" + Math.floor(1000 + Math.random() * 9000);
-        // 🔒 الحماية هنا: لو مفيش صلاحية، البيانات التقنية تبقى null
         const centerPrefix = centerId.split('-')[0];
         const technicalEmail = hasPortalAccess ? `${uniqueId.toLowerCase()}@${centerPrefix}.center.com` : null;
         const password = formData.phone || "12345678"; 
@@ -650,8 +674,9 @@ const result = await response.json();
         await refetch();
 
       } else {
-        // --- د- حالة التعديل (Update) ---
-        const originalStudent = studentsData?.students?.find(s => s.id === editId);
+        // --- د- حالة التعديل (Update) أو ضم طالب أونلاين (Link) ---
+        const targetEditId = linkOnlineStudentId || editId;
+        const originalStudent = studentsData?.students?.find(s => s.id === targetEditId) || { id: targetEditId };
         
         // 🧐 فحص هل هذا حساب Quick Add يحتاج تفعيل؟
         const needsActivation = !originalStudent?.unique_id || !originalStudent?.access_code || originalStudent?.access_code === '0';
@@ -703,14 +728,18 @@ const result = await response.json();
             }
 
         } else {
-            // 🚗 سيناريو التعديل العادي: داتابيز بس
+            // 🚗 سيناريو التعديل العادي أو ضم طالب أونلاين: داتابيز بس
             const { error: updateError } = await supabaseBrowser
               .from('students')
               .update(dataToSave)
-              .eq('id', editId);
+              .eq('id', targetEditId);
 
             if (updateError) throw updateError;
-            toast.success('تم تعديل البيانات بنجاح ');
+            if (linkOnlineStudentId) {
+                toast.success('🎉 تم ضم طالب الأونلاين للسنتر وتحديث بياناته بنجاح!');
+            } else {
+                toast.success('تم تعديل البيانات بنجاح ');
+            }
         }
 
         await refetch();
@@ -1929,22 +1958,8 @@ ${student.access_code ? `🔢 *كود ولي الأمر:* ${student.access_code}
             </div>
 
             <div className="flex flex-col sm:flex-row gap-4 mt-4">
-                <div className="flex-1 flex items-center gap-2 bg-gray-50 p-3 rounded-lg border min-h-[44px]">
-                    <label className="flex items-center gap-2 cursor-pointer w-full">
-                        <input 
-                            type="checkbox" 
-                            checked={!!formData.is_active}
-                            onChange={(e) => setFormData({ ...formData, is_active: e.target.checked })}
-                            className="w-5 h-5 accent-blue-600"
-                        />
-                        <span className={`font-bold ${formData.is_active ? 'text-blue-700' : 'text-gray-500'}`}>
-                            {formData.is_active ? '🔵 حساب الطالب مفعل' : '⚪ حساب معطل'}
-                        </span>
-                    </label>
-                </div>
-
                 {centerType === 'instructor' && (
-                    <div className="flex items-center gap-3 bg-blue-50 p-3 rounded-lg border border-blue-100 min-h-[44px]">
+                    <div className="flex items-center gap-3 bg-blue-50 p-3 rounded-lg border border-blue-100 min-h-[44px] w-full md:w-auto">
                         <span className="text-sm font-black text-blue-800 flex items-center gap-2">
                             📱 أقصى عدد أجهزة:
                         </span>
