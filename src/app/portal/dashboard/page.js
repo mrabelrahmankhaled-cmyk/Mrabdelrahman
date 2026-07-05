@@ -806,10 +806,6 @@ export default function StudentDashboard() {
     }
   }, [centerId]);
 
-  // 🧪 Debug: Test Sonner is working
-  useEffect(() => {
-    toast.success("🚀 Sonner شغالة!");
-  }, []);
 
   // 8️⃣ Countdown Timer Logic مع تحسينات الـ UX والأيام والتنبيه
   useEffect(() => {
