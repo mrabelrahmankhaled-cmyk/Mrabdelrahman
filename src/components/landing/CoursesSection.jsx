@@ -132,7 +132,7 @@ export default function CoursesSection() {
 
           {/* View All */}
           <Link
-            href="/portal"
+            href="/login"
             id="courses-view-all-btn"
             className="
               px-6 py-2.5 rounded-full text-sm font-bold
