@@ -1,0 +1,115 @@
+@import "tailwindcss";
+
+:root {
+  --background: #ffffff;
+  --foreground: #171717;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background: #0a0a0a;
+    --foreground: #ededed;
+  }
+}
+
+/* Tajawal font optimizations */
+body {
+  font-family: var(--font-tajawal), -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  font-feature-settings: "rlig" 1, "calt" 1;
+  background: var(--background);
+  color: var(--foreground);
+}
+
+/* 🖨️ Print CSS for DailyReportModal - الحل النهائي */
+@media print {
+
+  /* 1. إخفاء كل حاجة مع الحفاظ على المكان (عشان الرياكت ميزعلش) */
+  body * {
+    visibility: hidden;
+  }
+
+  /* 2. إظهار منطقة الفاتورة فقط */
+  #receipt-area,
+  #receipt-area * {
+    visibility: visible;
+  }
+
+  /* 3. أهم نقطة: تحجيم الصفحة لمنع التكرار */
+  html,
+  body {
+    height: auto !important;
+    min-height: 0 !important;
+    overflow: visible !important;
+    /* غيرناه لـ visible */
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+
+  /* 4. تنسيق الفاتورة لتملأ الورقة الأولى فقط */
+  #receipt-area {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    margin: 0;
+    padding: 20px;
+    z-index: 9999;
+    background: white;
+    /* يغطي على أي حاجة تحته */
+  }
+
+  /* 5. إلغاء هوامش الطابعة */
+  @page {
+    size: auto;
+    margin: 0mm;
+  }
+}
+
+
+@layer utilities {
+
+  /* إجبار لون وشفافية الـ Placeholder في كل الموقع */
+  input::placeholder,
+  textarea::placeholder {
+    opacity: 1 !important;
+    /* يلغي الشفافية الافتراضية للمتصفح */
+    color: #6b7280 !important;
+    /* كود اللون الرمادي الغامق (Gray-500) */
+  }
+
+  /* تأكيد على لون الخلفية والخط */
+  input,
+  textarea,
+  select {
+    background-color: #ffffff !important;
+    color: #111827 !important;
+    /* لون أسود غامق للكتابة */
+  }
+
+  @keyframes shake {
+
+    0%,
+    100% {
+      transform: translateX(0);
+    }
+
+    10%,
+    30%,
+    50%,
+    70%,
+    90% {
+      transform: translateX(-5px);
+    }
+
+    20%,
+    40%,
+    60%,
+    80% {
+      transform: translateX(5px);
+    }
+  }
+
+  .animate-shake {
+    animation: shake 0.5s cubic-bezier(.36, .07, .19, .97) both;
+  }
+}
