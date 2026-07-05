@@ -731,10 +731,10 @@ const result = await response.json();
         } else {
             // إذا كان طالب أونلاين مسجل قديماً وليس له كود سنتر، نولد له كود
             if (linkOnlineStudentId) {
-                if (!dataToSave.unique_id) {
-                    dataToSave.unique_id = "S-" + Math.floor(1000 + Math.random() * 9000);
+                if (!originalStudent?.unique_id) {
+                    dataToSave.unique_id = "ON-" + Math.floor(1000 + Math.random() * 9000);
                 }
-                if (!dataToSave.access_code) {
+                if (!originalStudent?.access_code || originalStudent?.access_code === '0') {
                     dataToSave.access_code = Math.floor(1000 + Math.random() * 9000).toString();
                 }
             }
