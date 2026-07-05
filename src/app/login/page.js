@@ -45,13 +45,13 @@ const MoleculeDecor = ({ className }) => (
     className={className}
   >
     <circle cx="100" cy="100" r="18" stroke="currentColor" strokeWidth="1.5" />
-    <circle cx="40"  cy="60"  r="12" stroke="currentColor" strokeWidth="1.5" />
-    <circle cx="160" cy="60"  r="12" stroke="currentColor" strokeWidth="1.5" />
-    <circle cx="40"  cy="140" r="12" stroke="currentColor" strokeWidth="1.5" />
+    <circle cx="40" cy="60" r="12" stroke="currentColor" strokeWidth="1.5" />
+    <circle cx="160" cy="60" r="12" stroke="currentColor" strokeWidth="1.5" />
+    <circle cx="40" cy="140" r="12" stroke="currentColor" strokeWidth="1.5" />
     <circle cx="160" cy="140" r="12" stroke="currentColor" strokeWidth="1.5" />
-    <line x1="82"  y1="88"  x2="52"  y2="68"  stroke="currentColor" strokeWidth="1.5" />
-    <line x1="118" y1="88"  x2="148" y2="68"  stroke="currentColor" strokeWidth="1.5" />
-    <line x1="82"  y1="112" x2="52"  y2="132" stroke="currentColor" strokeWidth="1.5" />
+    <line x1="82" y1="88" x2="52" y2="68" stroke="currentColor" strokeWidth="1.5" />
+    <line x1="118" y1="88" x2="148" y2="68" stroke="currentColor" strokeWidth="1.5" />
+    <line x1="82" y1="112" x2="52" y2="132" stroke="currentColor" strokeWidth="1.5" />
     <line x1="118" y1="112" x2="148" y2="132" stroke="currentColor" strokeWidth="1.5" />
   </svg>
 );
@@ -61,11 +61,11 @@ const MoleculeDecor = ({ className }) => (
 // ═══════════════════════════════════════════════════════════════
 export default function StudentLoginPage() {
   const [studentCode, setStudentCode] = useState('');
-  const [password, setPassword]       = useState('');
-  const [loading, setLoading]         = useState(false);
-  const [error, setError]             = useState('');
-  const [showPass, setShowPass]       = useState(false);
-  const router       = useRouter();
+  const [password, setPassword] = useState('');
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState('');
+  const [showPass, setShowPass] = useState(false);
+  const router = useRouter();
   const searchParams = useSearchParams();
 
   useEffect(() => {
@@ -126,7 +126,7 @@ export default function StudentLoginPage() {
           .select('is_active')
           .eq('id', data.user.id)
           .single();
-          
+
         if (studentData) isActive = studentData.is_active;
       }
 
@@ -230,7 +230,7 @@ export default function StudentLoginPage() {
                 <input
                   id="student-code"
                   type="text"
-                  placeholder="مثال: S-100"
+                  placeholder="مثال: AK-100"
                   value={studentCode}
                   onChange={(e) => setStudentCode(e.target.value)}
                   required
@@ -288,7 +288,7 @@ export default function StudentLoginPage() {
                   {showPass ? 'إخفاء' : 'إظهار'}
                 </button>
               </div>
-              <button 
+              <button
                 type="button"
                 onClick={() => setError('لإعادة تعيين كلمة السر، يرجى التواصل مع سكرتارية السنتر أو المعلم.')}
                 className="text-xs text-[#2A9D8F] hover:text-[#264653] font-bold underline-offset-4 hover:underline self-end mt-1 px-1 transition-colors"
