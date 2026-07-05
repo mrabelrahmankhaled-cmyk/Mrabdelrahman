@@ -265,7 +265,7 @@ export default function VouchersPage() {
             <div class="branding">
               ${centerSettings?.logo_url ? `<img src="${centerSettings.logo_url}" alt="logo" />` : ''}
               <div class="center-name">
-                ${centerSettings?.is_instructor_mode ? `أ/ ${centerSettings.name}` : centerSettings?.name || ''}
+                ${centerSettings?.is_instructor_mode ? `د/ ${centerSettings.name}` : centerSettings?.name || ''}
               </div>
             </div>
             <div class="course">${voucher.courses?.name}</div>
@@ -315,7 +315,7 @@ export default function VouchersPage() {
                 <div class="branding">
                   ${centerSettings?.logo_url ? `<img src="${centerSettings.logo_url}" alt="logo" />` : ''}
                   <div class="center-name">
-                    ${centerSettings?.is_instructor_mode ? `أ/ ${centerSettings.name}` : centerSettings?.name || ''}
+                    ${centerSettings?.is_instructor_mode ? `د/ ${centerSettings.name}` : centerSettings?.name || ''}
                   </div>
                 </div>
                 <div class="course">${v.courses?.name}</div>

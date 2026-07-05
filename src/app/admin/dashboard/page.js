@@ -1049,7 +1049,7 @@ async function fetchDashboardData() {
                           {sess.groups?.courses?.grade}
                         </span>
                       </h4>
-                      <p className="text-[10px] text-gray-500 font-bold">أ/ {sess.groups?.courses?.instructors?.name || sess.groups?.courses?.instructor || 'غير محدد'}</p>
+                      <p className="text-[10px] text-gray-500 font-bold">د/ {sess.groups?.courses?.instructors?.name || sess.groups?.courses?.instructor || 'غير محدد'}</p>
                    </div>
                 </div>
              )) : (
@@ -1091,7 +1091,7 @@ async function fetchDashboardData() {
                           {sess.groups?.courses?.grade}
                         </span>
                       </h4>
-                      <p className="text-[10px] text-gray-500 font-bold">أ/ {sess.groups?.courses?.instructors?.name || sess.groups?.courses?.instructor || 'غير محدد'}</p>
+                      <p className="text-[10px] text-gray-500 font-bold">د/ {sess.groups?.courses?.instructors?.name || sess.groups?.courses?.instructor || 'غير محدد'}</p>
                    </div>
                 </div>
              )) : (
@@ -1565,7 +1565,7 @@ async function fetchDashboardData() {
             {topTeachers.length > 0 ? topTeachers.map((teacher, index) => (
               <TeacherRank 
                 key={index}
-                name={`أ/ ${teacher.name}`} 
+                name={`د/ ${teacher.name}`} 
                 income={teacher.income.toLocaleString()} 
                 rank={index + 1} 
                 collectionRate={teacher.collectionRate}

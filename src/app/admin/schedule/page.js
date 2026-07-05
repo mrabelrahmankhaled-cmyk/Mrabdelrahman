@@ -424,7 +424,7 @@ function SchedulePage() {
                                 <div className="space-y-1 mb-2.5">
                                   <p className="text-[9px] md:text-[10px] text-green-600 font-bold flex items-center gap-1.5 opacity-80">
                                     <FaGraduationCap className="shrink-0 text-green-400" />
-                                    <span>أ/ {item.groups?.courses?.instructors?.name || item.groups?.courses?.instructor || 'غير محدد'}</span>
+                                    <span>د/ {item.groups?.courses?.instructors?.name || item.groups?.courses?.instructor || 'غير محدد'}</span>
                                   </p>
                                   <p className="text-[9px] md:text-[10px] text-gray-400 font-bold flex items-center gap-1.5">
                                     <FaUsers className="shrink-0 text-gray-300" />
@@ -603,7 +603,7 @@ function SchedulePage() {
                   >
                     <span className="text-xs font-black truncate text-gray-900">
                       {selectedCourseId ? (
-                        `${filteredCourses.find(c => c.id === selectedCourseId)?.name} (أ/ ${filteredCourses.find(c => c.id === selectedCourseId)?.instructors?.name || filteredCourses.find(c => c.id === selectedCourseId)?.instructor || 'غير محدد'})`
+                        `${filteredCourses.find(c => c.id === selectedCourseId)?.name} (د/ ${filteredCourses.find(c => c.id === selectedCourseId)?.instructors?.name || filteredCourses.find(c => c.id === selectedCourseId)?.instructor || 'غير محدد'})`
                       ) : '-- اختر الكورس --'}
                     </span>
                     <svg className={`w-4 h-4 text-blue-600 transition-transform ${isCourseDropOpen ? 'rotate-180' : ''}`} fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -626,7 +626,7 @@ function SchedulePage() {
                               className={`w-full p-4 text-right text-xs font-black hover:bg-blue-50 transition-colors flex flex-col items-start ${selectedCourseId === c.id ? 'bg-blue-50 text-blue-600' : 'text-gray-700'}`}
                             >
                               <span>{c.name}</span>
-                              <span className="text-[9px] opacity-60">أ/ {c.instructors?.name || c.instructor || 'غير محدد'}</span>
+                              <span className="text-[9px] opacity-60">د/ {c.instructors?.name || c.instructor || 'غير محدد'}</span>
                             </button>
                           ))}
                         </div>

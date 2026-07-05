@@ -31,7 +31,7 @@ export default function StudentDashboard() {
   const [studentId, setStudentId] = useState(null);
   const [uniqueCode, setUniqueCode] = useState('');
   const [centerSettings, setCenterSettings] = useState({
-    name: 'منصة الأستاذ عبدالرحمن خالد',
+    name: 'منصة الدكتور عبدالرحمن خالد',
     logo: 'AK',
     logo_url: null,
     description: '',
@@ -937,7 +937,7 @@ export default function StudentDashboard() {
           </div>
 
           <div className="block z-10 self-end mr-auto -mt-6 md:-mt-16">
-             <img src="/hero-image.png" alt="أ/ عبدالرحمن خالد" className="w-44 md:w-[280px] object-contain drop-shadow-2xl" />
+             <img src="/hero-image.png" alt="د/ عبدالرحمن خالد" className="w-44 md:w-[280px] object-contain drop-shadow-2xl" />
           </div>
         </div>
         
@@ -1081,7 +1081,7 @@ export default function StudentDashboard() {
                      <div className="p-4 flex-1 flex flex-col">
                         <h4 className="font-black text-[#264653] text-sm mb-1 group-hover:text-[#2A9D8F] transition-colors line-clamp-2">{course.name}</h4>
                         <p className="text-[10px] font-bold text-gray-400 mt-auto flex items-center gap-1">
-                           <FaUserGraduate className="text-[#2A9D8F]" /> {course.instructors?.name || 'الأستاذ عبدالرحمن خالد'}
+                           <FaUserGraduate className="text-[#2A9D8F]" /> {course.instructors?.name || 'الدكتور عبدالرحمن خالد'}
                         </p>
                      </div>
                   </Link>
@@ -1227,7 +1227,7 @@ export default function StudentDashboard() {
                                                             <div className={`w-5 h-5 rounded-lg flex items-center justify-center shrink-0 ${session.exam_id ? 'bg-rose-50 text-rose-500' : 'bg-blue-50 text-blue-500'}`}>
                                                               {session.exam_id ? <FaFileAlt size={10} /> : <FaUserGraduate size={10} />}
                                                             </div>
-                                                            <span className="truncate">{session.exam_id ? `مادة / ${session.groups?.courses?.name}` : `أ/ ${session.groups?.courses?.instructors?.name || session.groups?.courses?.instructor}`}</span>
+                                                            <span className="truncate">{session.exam_id ? `مادة / ${session.groups?.courses?.name}` : `د/ ${session.groups?.courses?.instructors?.name || session.groups?.courses?.instructor}`}</span>
                                                         </div>
                                                     </div>
                                                     <div className="w-full sm:w-auto flex sm:flex-col justify-between items-center sm:items-end gap-2 border-t sm:border-t-0 pt-3 sm:pt-0 border-slate-50">
@@ -1355,7 +1355,7 @@ export default function StudentDashboard() {
                                             <h4 className="font-black text-slate-800 text-sm md:text-lg mb-1 group-hover:text-blue-600 transition-colors leading-tight">{res.exams.title}</h4>
                                             <p className="text-[10px] md:text-[11px] text-slate-400 font-black uppercase tracking-widest flex items-center gap-2">
                                               <span className="w-1.5 h-1.5 bg-blue-500 rounded-full shrink-0"></span>
-                                              {res.exams.courses?.name} — أ/ {res.exams.courses?.instructors?.name || res.exams.courses?.instructor || 'غير محدد'}
+                                              {res.exams.courses?.name} — د/ {res.exams.courses?.instructors?.name || res.exams.courses?.instructor || 'غير محدد'}
                                             </p>
                                         </div>
                                     </div>

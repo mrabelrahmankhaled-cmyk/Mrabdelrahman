@@ -111,7 +111,7 @@ export default function AdminLoginPage() {
             نظام الإدارة والتحكم
           </h1>
           <p className="text-gray-500 text-sm text-center mb-8">
-            منصة الأستاذ عبدالرحمن خالد
+            منصة الدكتور عبدالرحمن خالد
           </p>
         </div>
 

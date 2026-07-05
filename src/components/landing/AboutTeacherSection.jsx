@@ -85,13 +85,13 @@ export default function AboutTeacherSection() {
           {/* Eyebrow badge */}
           <span className="inline-flex items-center gap-2 self-start px-4 py-1.5 rounded-full bg-[#F8F9FA]/10 border border-[#F8F9FA]/15 text-sm font-semibold text-[#F8F9FA]/80">
             <span className="w-1.5 h-1.5 rounded-full bg-[#2A9D8F] shrink-0 inline-block" />
-            من هو الأستاذ؟
+            من هو الدكتور؟
           </span>
 
           {/* Heading */}
           <div>
             <h2 className="text-[#F8F9FA] text-3xl sm:text-4xl lg:text-5xl font-bold leading-tight mb-3">
-              أ/ عبدالرحمن{' '}
+              د/ عبدالرحمن{' '}
               <span className="text-[#2A9D8F]">خالد</span>
             </h2>
             <p className="text-[#F8F9FA]/50 text-base font-medium tracking-wide">
@@ -101,7 +101,7 @@ export default function AboutTeacherSection() {
 
           {/* Bio paragraph */}
           <p className="text-[#F8F9FA]/75 text-base sm:text-lg leading-relaxed max-w-xl">
-            الأستاذ عبدالرحمن خالد واحد من أبرز مدرّسي الكيمياء في العالم
+            الدكتور عبدالرحمن خالد واحد من أبرز مدرّسي الكيمياء في العالم
             العربي. بيقدّم محتوى تعليمي فريد بأسلوب مبسّط وممتع يوصل لكل
             طالب. رسالته الأساسية إن الكيمياء مش صعبة — لازم بس تتعلّمها
             بالطريقة الصح.
@@ -169,7 +169,7 @@ export default function AboutTeacherSection() {
             <div className="relative rounded-3xl overflow-hidden border border-[#F8F9FA]/10 shadow-2xl bg-[#1d3a45]">
               <Image
                 src="/hero-image.png"
-                alt="الأستاذ عبدالرحمن خالد"
+                alt="الدكتور عبدالرحمن خالد"
                 width={480}
                 height={520}
                 unoptimized
@@ -199,7 +199,7 @@ export default function AboutTeacherSection() {
               <footer className="flex items-center gap-3 justify-end">
                 <div className="text-right">
                   <cite className="text-[#F8F9FA] text-sm font-bold not-italic">
-                    أ/ عبدالرحمن خالد
+                    د/ عبدالرحمن خالد
                   </cite>
                   <p className="text-[#F8F9FA]/70 text-xs">مدرس كيمياء</p>
                 </div>

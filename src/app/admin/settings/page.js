@@ -731,7 +731,7 @@ export default function SettingsPage() {
                   value={instructorFields.instructor_name}
                   onChange={e => setInstructorFields(p => ({ ...p, instructor_name: e.target.value }))}
                   className="w-full p-4 bg-white border-2 border-slate-200 rounded-2xl focus:border-violet-500 outline-none font-black text-slate-800 text-sm"
-                  placeholder="أ/ محمد علي"
+                  placeholder="د/ محمد علي"
                 />
               </div>
               <div className="space-y-2">
@@ -751,7 +751,7 @@ export default function SettingsPage() {
                   value={instructorFields.instructor_title}
                   onChange={e => setInstructorFields(p => ({ ...p, instructor_title: e.target.value }))}
                   className="w-full p-4 bg-white border-2 border-slate-200 rounded-2xl focus:border-violet-500 outline-none font-black text-slate-800 text-sm"
-                  placeholder="أستاذ — خبرة 15 سنة"
+                  placeholder="دكتور — خبرة 15 سنة"
                 />
               </div>
               <div className="space-y-2 md:col-span-2">
@@ -761,7 +761,7 @@ export default function SettingsPage() {
                   onChange={e => setInstructorFields(p => ({ ...p, instructor_bio: e.target.value }))}
                   rows={3}
                   className="w-full p-4 bg-white border-2 border-slate-200 rounded-2xl focus:border-violet-500 outline-none font-bold text-slate-700 text-sm resize-none"
-                  placeholder="أستاذ رياضيات بخبرة 15 عام، متخصص في تأسيس طلاب الثانوية العامة..."
+                  placeholder="دكتور رياضيات بخبرة 15 عام، متخصص في تأسيس طلاب الثانوية العامة..."
                 />
               </div>
 
@@ -959,7 +959,7 @@ export default function SettingsPage() {
                     </div>
                   )}
                   <div>
-                    <p className="font-black text-slate-800 text-xl">أ/ {instructorFields.instructor_name || 'اسم المدرس'}</p>
+                    <p className="font-black text-slate-800 text-xl">د/ {instructorFields.instructor_name || 'اسم المدرس'}</p>
                     <p className="text-sm font-bold text-violet-600">
                       {instructorFields.instructor_title}{instructorFields.instructor_title && instructorFields.instructor_subject ? ' · ' : ''}{instructorFields.instructor_subject}
                     </p>

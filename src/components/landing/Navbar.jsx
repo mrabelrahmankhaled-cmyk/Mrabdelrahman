@@ -138,13 +138,8 @@ export default function Navbar() {
         aria-label="شريط التنقل الرئيسي"
       >
         {/* ── Logo ── */}
-        <Link href="/" className="flex items-center gap-2 shrink-0" aria-label="الرئيسية - الأستاذ عبدالرحمن خالد">
-          <span className="flex items-center gap-1.5">
-            <span className="text-xl">⚗️</span>
-            <span className="text-[#264653] dark:text-[#F8F9FA] font-bold text-base tracking-tight leading-none">
-              أ. عبدالرحمن <span className="text-[#2A9D8F]">خالد</span>
-            </span>
-          </span>
+        <Link href="/" className="flex items-center gap-2 shrink-0 mr-2 md:mr-4" aria-label="الرئيسية - الدكتور عبدالرحمن خالد">
+          <img src="/logo.png" alt="شعار الدكتور عبدالرحمن خالد" className="h-10 md:h-12 w-auto object-contain" />
         </Link>
 
         {/* ── Nav Links ── */}
@@ -236,13 +231,8 @@ export default function Navbar() {
         {/* Top Bar */}
         <div className="flex items-center justify-between px-4 py-3">
           {/* Logo */}
-          <Link href="/" aria-label="الرئيسية - الأستاذ عبدالرحمن خالد">
-            <span className="flex items-center gap-1.5">
-              <span className="text-lg">⚗️</span>
-              <span className="text-[#264653] dark:text-[#F8F9FA] font-bold text-sm tracking-tight leading-none">
-                أ. عبدالرحمن <span className="text-[#2A9D8F]">خالد</span>
-              </span>
-            </span>
+          <Link href="/" className="mr-1" aria-label="الرئيسية - الدكتور عبدالرحمن خالد">
+            <img src="/logo.png" alt="شعار الدكتور عبدالرحمن خالد" className="h-8 md:h-10 w-auto object-contain" />
           </Link>
 
           <div className="flex items-center gap-1">

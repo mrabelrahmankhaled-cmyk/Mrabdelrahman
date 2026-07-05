@@ -121,7 +121,7 @@ export default async function AdminLayout({ children }) {
               </div>
               <div className="flex flex-col">
                 <h1 className="text-lg md:text-2xl font-black text-white tracking-tight drop-shadow-sm">
-                  {centerType === 'instructor' ? `أ/ ${centerName}` : centerName}
+                  {centerType === 'instructor' ? `د/ ${centerName}` : centerName}
                 </h1>
                 <div className="hidden md:flex items-center gap-2">
                   {centerType === 'instructor' && (instructorTitle || instructorSubject) ? (

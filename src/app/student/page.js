@@ -172,7 +172,7 @@ export default function StudentLandingPage() {
                   {settings?.instructor_name?.[0] || 'N'}
                </div>
                 <span className="font-black text-xl tracking-tighter text-slate-800">
-                   {settings?.instructor_name ? `أ/ ${settings.instructor_name}` : (settings?.center_name || 'NEXUS ACADEMY')}
+                   {settings?.instructor_name ? `د/ ${settings.instructor_name}` : (settings?.center_name || 'NEXUS ACADEMY')}
                 </span>
              </Link>
 
@@ -229,7 +229,7 @@ export default function StudentLandingPage() {
               </motion.div>
 
               <h1 className="text-5xl md:text-8xl font-black leading-[1.1] text-slate-900 mb-8">
-                {settings?.hero_title || (settings?.instructor_name ? `أكاديمية أ/ ${settings.instructor_name}` : 'مستقبلك التعليمي الرقمي')}
+                {settings?.hero_title || (settings?.instructor_name ? `أكاديمية د/ ${settings.instructor_name}` : 'مستقبلك التعليمي الرقمي')}
               </h1>
               
               <p className="text-lg md:text-2xl font-bold text-slate-500 mb-10 leading-relaxed max-w-2xl mx-auto lg:mx-0">
@@ -328,7 +328,7 @@ export default function StudentLandingPage() {
               <div className="lg:col-span-1">
                  <p style={{ color: primaryColor }} className="font-black text-xs uppercase tracking-[0.3em] mb-4">لماذا نحن الخيار الأول؟</p>
                  <h2 className="text-4xl md:text-5xl font-black text-slate-900 mb-8 leading-tight">
-                    {settings?.instructor_name ? `ليه تشترك في أكاديمية أ/ ${settings.instructor_name}؟` : 'بنطوع المنهج عشان يكون أسهل ليك'}
+                    {settings?.instructor_name ? `ليه تشترك في أكاديمية د/ ${settings.instructor_name}؟` : 'بنطوع المنهج عشان يكون أسهل ليك'}
                  </h2>
                  <p className="text-slate-500 font-bold leading-relaxed mb-10">
                     {settings?.instructor_subject ? `مادة ${settings.instructor_subject} مش بس قوانين، دي طريقة تفكير. هنا بنتعلم إزاي نحل بذكاء وبأقل مجهود ممكن.` : 'الرياضيات أو أي مادة تانية مش بس قوانين، دي طريقة تفكير. هنا بنتعلم إزاي نحل بذكاء وبأقل مجهود ممكن.'}
@@ -400,7 +400,7 @@ export default function StudentLandingPage() {
                           <img src={settings?.instructor_photo_url} className="w-full h-full object-cover" alt="" />
                        </div>
                        <div>
-                          <p className="text-2xl font-black text-white mb-1">{settings?.instructor_name ? `أ/ ${settings.instructor_name}` : 'أستاذ المادة'}</p>
+                          <p className="text-2xl font-black text-white mb-1">{settings?.instructor_name ? `د/ ${settings.instructor_name}` : 'دكتور المادة'}</p>
                           <p className="text-xs text-white/40 font-black uppercase tracking-widest">{settings?.instructor_title || 'Expert Educator'}</p>
                        </div>
                     </div>
@@ -469,11 +469,11 @@ export default function StudentLandingPage() {
                {/* Branding */}
                <div className="max-w-md text-right">
                   <h2 className="text-3xl font-black mb-4 text-white tracking-tighter">
-                    {settings?.instructor_name ? `أ/ ${settings.instructor_name}` : 'NEXUS'}<span style={{ color: primaryColor }}>.</span>
+                    {settings?.instructor_name ? `د/ ${settings.instructor_name}` : 'NEXUS'}<span style={{ color: primaryColor }}>.</span>
                   </h2>
                   <p className="text-white/40 text-sm font-bold leading-relaxed">
                      {settings?.instructor_name 
-                      ? `المنصة الرسمية لـ أ/ ${settings.instructor_name} لتقديم أفضل تجربة تعليمية في مصر.`
+                      ? `المنصة الرسمية لـ د/ ${settings.instructor_name} لتقديم أفضل تجربة تعليمية في مصر.`
                       : 'تجربة تعليمية تتخطى الحدود بأحدث التقنيات.'}
                   </p>
                </div>

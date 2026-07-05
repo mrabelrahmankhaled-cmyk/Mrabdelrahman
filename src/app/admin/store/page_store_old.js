@@ -3537,7 +3537,7 @@ onClick={() => {
                           <label className="text-xs font-bold text-gray-400 mb-1 block">اسم المستلم (مين أخد الفلوس؟)</label>
                           <div className="relative">
                               <FaUserCheck className="absolute right-4 top-3.5 text-gray-400"/>
-                              <input type="text" autoFocus placeholder="مثال: مستر أحمد / أستاذة منى" value={settlementData.receiver_name} onChange={e => setSettlementData({...settlementData, receiver_name: e.target.value})} className="w-full p-3 pr-10 bg-gray-50 border-2 border-green-100 rounded-xl font-bold outline-none focus:border-green-500" />
+                              <input type="text" autoFocus placeholder="مثال: مستر أحمد / دكتورة منى" value={settlementData.receiver_name} onChange={e => setSettlementData({...settlementData, receiver_name: e.target.value})} className="w-full p-3 pr-10 bg-gray-50 border-2 border-green-100 rounded-xl font-bold outline-none focus:border-green-500" />
                           </div>
                       </div>
                       <div>

@@ -223,7 +223,7 @@ export default function RegisterPage() {
             <div className="w-20 h-20 rounded-full overflow-hidden border-4 border-[#2A9D8F] shadow-xl shadow-[#2A9D8F]/30 bg-white">
               <Image
                 src="/hero-image.png"
-                alt="أ/ عبدالرحمن خالد"
+                alt="د/ عبدالرحمن خالد"
                 width={80}
                 height={80}
                 unoptimized
@@ -284,7 +284,7 @@ export default function RegisterPage() {
                   <span className="text-[#2A9D8F]">حساب جديد</span>
                 </h1>
                 <p className="text-[#264653]/50 text-sm font-medium">
-                  انضم الآن لطلاب الأستاذ عبدالرحمن خالد
+                  انضم الآن لطلاب الدكتور عبدالرحمن خالد
                 </p>
               </div>
 

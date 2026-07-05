@@ -946,7 +946,7 @@ const handleResetDevice = async (id, name) => {
               const course = courses.find(c => c.id === cid);
               if (!course) return cid;
               const teacher = course.instructors?.name || course.instructor || 'مدرس المادة';
-              return `${course.name} (أ/ ${teacher})`;
+              return `${course.name} (د/ ${teacher})`;
           }).join(' | ') : '-',
           'المجموعات': student.enrolled_courses ? student.enrolled_courses.map(cid => {
               const gId = student.group_ids?.[cid];
@@ -2296,7 +2296,7 @@ ${student.access_code ? `🔢 *كود ولي الأمر:* ${student.access_code}
                                             <div className="flex flex-col gap-1">
                                               <span className="font-black text-gray-800 text-xs leading-tight">
                                                  {c.name}
-                                                 <span className="block text-[10px] text-gray-400 mt-0.5">أ/ {teacherName}</span>
+                                                 <span className="block text-[10px] text-gray-400 mt-0.5">د/ {teacherName}</span>
                                               </span>
                                               <div className="flex flex-wrap gap-1 mt-1">
                                                  {isMonthly && <span className="text-[8px] font-black bg-purple-50 text-purple-600 px-1.5 py-0.5 rounded border border-purple-100">شهري 📅</span>}

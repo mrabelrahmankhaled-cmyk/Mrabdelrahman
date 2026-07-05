@@ -9,7 +9,7 @@ const PAGE_LINKS = [
   { label: 'الرئيسية',    href: '#' },
   { label: 'المميزات',    href: '#features' },
   { label: 'كورساتنا',   href: '#courses' },
-  { label: 'عن الأستاذ', href: '#about' },
+  { label: 'عن الدكتور', href: '#about' },
   { label: 'الأسعار',    href: '#pricing' },
   { label: 'اتصل بنا',   href: '#contact' },
 ];
@@ -77,18 +77,12 @@ export default function FooterSection() {
 
           {/* ── Col 1: Brand / about ── */}
           <div className="lg:col-span-2 flex flex-col gap-5">
-            {/* Logo text mark */}
-            <div className="flex items-center gap-2.5">
-              <span className="text-3xl">⚗️</span>
-              <div className="text-right">
-                <p className="text-[#264653] font-black text-xl leading-none">
-                  أ/ عبدالرحمن{' '}
-                  <span className="text-[#2A9D8F]">خالد</span>
-                </p>
-                <p className="text-[#264653]/50 text-xs mt-0.5 tracking-wide">
-                  منصة الكيمياء الأولى
-                </p>
-              </div>
+            {/* Logo mark */}
+            <div className="flex flex-col gap-2 mr-1 md:mr-2">
+              <img src="/logo.png" alt="شعار الدكتور عبدالرحمن خالد" className="h-14 md:h-16 w-auto object-contain" />
+              <p className="text-[#264653]/50 text-xs mt-0.5 tracking-wide">
+                منصة الكيمياء الأولى
+              </p>
             </div>
 
             <p className="text-[#264653]/60 text-sm leading-relaxed max-w-sm">
@@ -182,7 +176,7 @@ export default function FooterSection() {
 
           {/* Copyright */}
           <p className="text-[#264653]/50 text-xs">
-            © {new Date().getFullYear()} أ/ عبدالرحمن خالد — جميع الحقوق محفوظة.
+            © {new Date().getFullYear()} د/ عبدالرحمن خالد — جميع الحقوق محفوظة.
           </p>
 
           {/* Developer credit — geeky JSX-style signature */}

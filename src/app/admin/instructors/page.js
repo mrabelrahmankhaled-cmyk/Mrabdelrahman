@@ -296,7 +296,7 @@ export default function InstructorsPage() {
                     {instructor.name.charAt(0)}
                   </div>
                   <div className="space-y-1">
-                    <h3 className="font-black text-lg md:text-xl text-gray-800 leading-tight group-hover:text-blue-600 transition-colors">أ/ {instructor.name}</h3>
+                    <h3 className="font-black text-lg md:text-xl text-gray-800 leading-tight group-hover:text-blue-600 transition-colors">د/ {instructor.name}</h3>
                     <div className="flex items-center justify-center gap-2 text-xs font-bold text-gray-400">
                       <FaPhone className="rotate-12 shrink-0 text-blue-400"/> 
                       <span dir="ltr">{instructor.phone || 'لا يوجد رقم'}</span>

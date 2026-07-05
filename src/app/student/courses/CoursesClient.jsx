@@ -145,7 +145,7 @@ export default function StudentCoursesClient({ centerCourses = [], centerSetting
                     <h1 className="text-4xl md:text-5xl lg:text-6xl font-black text-[#F8F9FA] leading-tight mb-4">
                         كورسات الكيمياء{' '}
                         <span className="text-[#2A9D8F] block mt-2 text-3xl md:text-4xl">
-                            أ/ عبدالرحمن خالد
+                            د/ عبدالرحمن خالد
                         </span>
                     </h1>
                     
@@ -175,7 +175,7 @@ export default function StudentCoursesClient({ centerCourses = [], centerSetting
                 </motion.div>
 
                 <motion.div initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} className="hidden md:block z-10 self-end -mb-2">
-                    <img src="/hero-image.png" alt="أ/ عبدالرحمن خالد" className="w-48 lg:w-64 object-contain drop-shadow-2xl" />
+                    <img src="/hero-image.png" alt="د/ عبدالرحمن خالد" className="w-48 lg:w-64 object-contain drop-shadow-2xl" />
                 </motion.div>
             </header>
 
@@ -308,7 +308,7 @@ function CourseCard({ course, isEnrolled, index, accessType, examsCount, router 
                         <div className="flex items-center justify-between text-gray-500">
                             <div className="flex items-center gap-2">
                                 <FaAward className="text-[#2A9D8F]" size={14} />
-                                <span className="text-xs font-bold">أ/ {course.instructors?.name || 'عبدالرحمن خالد'}</span>
+                                <span className="text-xs font-bold">د/ {course.instructors?.name || 'عبدالرحمن خالد'}</span>
                             </div>
                             <div className="flex items-center gap-2">
                                 <FaMagic size={12} className="text-[#2A9D8F]" />

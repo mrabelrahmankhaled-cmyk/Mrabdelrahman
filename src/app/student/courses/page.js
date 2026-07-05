@@ -150,6 +150,6 @@ export default async function StudentCoursesPage() {
 
 // Tell Next.js what metadata this page has
 export const metadata = {
-  title: 'بوابة المناهج الرقمية | الأستاذ عبدالرحمن خالد',
+  title: 'بوابة المناهج الرقمية | الدكتور عبدالرحمن خالد',
   description: 'استعرض كل المواد الدراسية المتاحة وادخل على محتواك التعليمي',
 };

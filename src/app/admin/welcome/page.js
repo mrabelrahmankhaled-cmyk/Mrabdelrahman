@@ -178,7 +178,7 @@ export default function WelcomePage() {
                   type="text"
                   value={form.name}
                   onChange={e => setForm(p => ({ ...p, name: e.target.value }))}
-                  placeholder={isInstructor ? 'أ/ محمد علي...' : 'مركز النور للتعليم...'}
+                  placeholder={isInstructor ? 'د/ محمد علي...' : 'مركز النور للتعليم...'}
                   className="w-full bg-white/5 border-2 border-white/10 focus:border-white/30 rounded-2xl p-4 text-white font-black placeholder:text-white/20 outline-none transition-all text-lg"
                   style={{ caretColor: form.primaryColor }}
                 />
@@ -311,7 +311,7 @@ export default function WelcomePage() {
                 {/* Text */}
                 <div className="relative">
                   <p className="text-white font-black text-xl leading-tight">
-                    {isInstructor ? `أ/ ${form.name}` : form.name}
+                    {isInstructor ? `د/ ${form.name}` : form.name}
                   </p>
                   <div className="flex items-center gap-2 mt-1">
                     <span className="w-2 h-2 bg-green-400 rounded-full animate-pulse" />

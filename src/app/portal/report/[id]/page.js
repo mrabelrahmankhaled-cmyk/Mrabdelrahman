@@ -15,7 +15,7 @@ export default function StudentReportPage({ params }) {
   const [allSessions, setAllSessions] = useState([]);
   const [loading, setLoading] = useState(true);
   const [centerConfig, setCenterConfig] = useState({
-    center_name: 'منصة الأستاذ عبدالرحمن خالد',
+    center_name: 'منصة الدكتور عبدالرحمن خالد',
     primary_color: '#264653',
     logo_url: '',
     report_footer: 'شكراً لاهتمامكم - إدارة المنصة',
@@ -262,7 +262,7 @@ const printStyles = `
              <div className="w-10 h-10 rounded-xl flex items-center justify-center text-white shadow-lg bg-[#264653]">
                 <FaGraduationCap size={20} />
              </div>
-             <span className="font-black text-[#264653] tracking-tight text-sm hidden md:block">منصة الأستاذ عبدالرحمن خالد | تقرير الأداء الأكاديمي</span>
+             <span className="font-black text-[#264653] tracking-tight text-sm hidden md:block">منصة الدكتور عبدالرحمن خالد | تقرير الأداء الأكاديمي</span>
           </div>
 
           {/* 
@@ -300,7 +300,7 @@ const printStyles = `
                 {/* 🏦 Center Details (From Settings) */}
                 <div className="space-y-3">
                    <div className="flex flex-col gap-1">
-                      <h1 className="text-3xl md:text-5xl font-black text-[#264653] tracking-tighter leading-tight md:leading-none">منصة الأستاذ عبدالرحمن خالد</h1>
+                      <h1 className="text-3xl md:text-5xl font-black text-[#264653] tracking-tighter leading-tight md:leading-none">منصة الدكتور عبدالرحمن خالد</h1>
                       <div className="flex items-center gap-3 justify-center md:justify-start mt-2">
                         <div className="h-[2px] w-8 md:w-12 rounded-full bg-[#2A9D8F]"></div>
                         <p className="text-[10px] md:text-[12px] font-black uppercase tracking-[0.2em] md:tracking-[0.3em] text-[#2A9D8F]">لتعلم الكيمياء - ثانوية عامة</p>
@@ -497,7 +497,7 @@ const printStyles = `
           <div className="bg-[#264653] p-10 md:p-16 text-[#F8F9FA] print:bg-white print:text-gray-400 print:border-t-4 print:border-gray-50 print:p-14">
              <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-10 md:gap-12 print:flex print:justify-between">
                 <div className="space-y-4 text-center md:text-right w-full md:w-auto">
-                   <p className="text-2xl md:text-3xl font-black leading-none tracking-tighter uppercase">منصة الأستاذ عبدالرحمن خالد</p>
+                   <p className="text-2xl md:text-3xl font-black leading-none tracking-tighter uppercase">منصة الدكتور عبدالرحمن خالد</p>
                    <p className="text-xs md:text-sm font-bold opacity-80 max-w-sm leading-loose border-r-0 md:border-r-2 pr-0 md:pr-6 mx-auto md:mx-0 border-[#2A9D8F]">لتعلم الكيمياء - ثانوية عامة</p>
                 </div>
                 
@@ -511,7 +511,7 @@ const printStyles = `
                       )}
                    </div>
                    <div className="opacity-40 font-black text-[8px] md:text-[9px] uppercase tracking-[0.2em] md:tracking-[0.4em] flex flex-col gap-1 items-center md:items-end text-center md:text-right">
-                      <span>منصة الأستاذ عبدالرحمن خالد - لتعلم الكيمياء © 2026</span>
+                      <span>منصة الدكتور عبدالرحمن خالد - لتعلم الكيمياء © 2026</span>
                       <span>تاريخ الإصدار: {new Date().toLocaleString('ar-EG')}</span>
                    </div>
                 </div>

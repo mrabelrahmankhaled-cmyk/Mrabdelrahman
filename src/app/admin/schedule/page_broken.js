@@ -279,7 +279,7 @@ export default function SchedulePage() {
 
       {/* اسم المدرس */}
       <p className="text-[9px] text-green-600 font-bold flex items-center gap-1">
-        أ/ {item.groups?.courses?.instructors?.name || item.groups?.courses?.instructor || 'غير محدد'}
+        د/ {item.groups?.courses?.instructors?.name || item.groups?.courses?.instructor || 'غير محدد'}
       </p>
       
       {/* اسم المجموعة */}
@@ -384,7 +384,7 @@ export default function SchedulePage() {
                       >
                         <option value="">-- اختر الكورس --</option>
                         {filteredCourses.map(c => (
-                          <option key={c.id} value={c.id}>{c.name} (أ/ {c.instructors?.name || c.instructor || 'غير محدد'})</option>
+                          <option key={c.id} value={c.id}>{c.name} (د/ {c.instructors?.name || c.instructor || 'غير محدد'})</option>
                         ))}
                       </select>
                     </div>

@@ -449,7 +449,7 @@ export default function LessonsPage() {
                     >
                       <option value="">اختر المادة والمدرس</option>
                       {filteredCourses.map(c => (
-                        <option key={c.id} value={c.id}>{c.name} - أ/ {c.instructors?.name || 'مجهول'}</option>
+                        <option key={c.id} value={c.id}>{c.name} - د/ {c.instructors?.name || 'مجهول'}</option>
                       ))}
                     </select>
                     <FaChevronDown className="absolute left-5 top-1/2 -translate-y-1/2 text-slate-600" />

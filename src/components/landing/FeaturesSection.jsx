@@ -25,7 +25,7 @@ const FEATURES = [
   {
     number: '04',
     title: 'متابعة مستمرة',
-    description: 'الأستاذ دايماً موجود للرد على الأسئلة ومتابعة تقدمك.',
+    description: 'الدكتور دايماً موجود للرد على الأسئلة ومتابعة تقدمك.',
     icon: '💬',
   },
   {
@@ -163,7 +163,7 @@ export default function FeaturesSection() {
           </h2>
 
           <p className="text-[#264653]/60 text-base sm:text-lg max-w-2xl mx-auto leading-relaxed">
-            منصة الأستاذ عبدالرحمن خالد مش بس دروس — دي تجربة تعليمية متكاملة
+            منصة الدكتور عبدالرحمن خالد مش بس دروس — دي تجربة تعليمية متكاملة
             صُممت عشان توصّلك للتفوق.
           </p>
         </div>

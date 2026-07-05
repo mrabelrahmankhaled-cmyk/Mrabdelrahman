@@ -207,7 +207,7 @@ export default function GroupManager() {
               <option value="">-- اختر الكورس --</option>
               {filteredCourses.map(course => (
                 <option key={course.id} value={course.id}>
-                  {course.name} (أ/ {course.instructors?.name || course.instructor || 'غير محدد'})
+                  {course.name} (د/ {course.instructors?.name || course.instructor || 'غير محدد'})
                 </option>
               ))}
             </select>
@@ -356,7 +356,7 @@ export default function GroupManager() {
                     <div className="h-6 w-6 rounded-lg bg-green-100 flex items-center justify-center text-green-600 shrink-0 mt-0.5">
                       <FaUserTie size={10} />
                     </div>
-                    <span className="flex-1 leading-relaxed">المدرس: أ/ {group.courses?.instructors?.name || group.courses?.instructor || 'غير محدد'}</span>
+                    <span className="flex-1 leading-relaxed">المدرس: د/ {group.courses?.instructors?.name || group.courses?.instructor || 'غير محدد'}</span>
                   </div>
                 </div>
               </div>

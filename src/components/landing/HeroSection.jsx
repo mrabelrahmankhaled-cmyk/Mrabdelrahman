@@ -103,7 +103,7 @@ export default function HeroSection() {
 
           <Image
             src="/hero-image.png"
-            alt="الأستاذ عبدالرحمن خالد — مدرس الكيمياء"
+            alt="الدكتور عبدالرحمن خالد — مدرس الكيمياء"
             width={800}
             height={850}
             priority={true}
@@ -144,7 +144,7 @@ export default function HeroSection() {
               <span className="relative inline-flex rounded-full h-2 w-2 bg-[#2A9D8F]" />
             </span>
             <span className="text-sm font-semibold text-[#2A9D8F] tracking-wide">
-              منصة الأستاذ عبدالرحمن خالد
+              منصة الدكتور عبدالرحمن خالد
             </span>
           </div>
 
@@ -175,7 +175,7 @@ export default function HeroSection() {
 
           {/* H2 / Sub-heading */}
           <p className="text-[#F8F9FA]/70 text-base sm:text-lg leading-relaxed max-w-lg">
-            أهلاً بيك في بيتك التاني! مع الأستاذ عبدالرحمن خالد، هتلاقي كل اللي
+            أهلاً بيك في بيتك التاني! مع الدكتور عبدالرحمن خالد، هتلاقي كل اللي
             تحتاجه علشان تتفوق في الكيمياء وتفهمها صح.
           </p>
 

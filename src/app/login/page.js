@@ -179,7 +179,7 @@ export default function StudentLoginPage() {
           <div className="w-24 h-24 rounded-full overflow-hidden border-4 border-[#2A9D8F] shadow-xl shadow-[#2A9D8F]/30 bg-white">
             <Image
               src="/hero-image.png"
-              alt="أ/ عبدالرحمن خالد"
+              alt="د/ عبدالرحمن خالد"
               width={96}
               height={96}
               unoptimized
@@ -198,7 +198,7 @@ export default function StudentLoginPage() {
           {/* ── Card header ── */}
           <div className="text-center mb-8">
             <h1 className="text-[#264653] text-2xl font-black leading-snug mb-1">
-              منصة الأستاذ{' '}
+              منصة الدكتور{' '}
               <span className="text-[#2A9D8F]">عبدالرحمن خالد</span>
             </h1>
             <p className="text-[#264653]/55 text-sm font-medium">
