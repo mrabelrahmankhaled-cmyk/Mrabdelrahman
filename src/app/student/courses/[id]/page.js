@@ -429,7 +429,7 @@ export default function StudentCourseView() {
             <div className="space-y-0 md:space-y-10">
                
                {/* 📽️ Cinematic Player Layer */}
-               <div className="relative group sticky top-0 z-40 w-full bg-black md:bg-transparent aspect-video md:aspect-auto md:static">
+               <div className={`relative group z-40 w-full bg-black md:bg-transparent ${(!selectedLesson || canWatchCurrent) ? 'sticky top-0 aspect-video' : 'h-auto'} md:aspect-auto md:static`}>
                   <div className="absolute -inset-1 bg-gradient-to-r from-[#2A9D8F] to-[#264653] rounded-[2.5rem] blur opacity-10 group-hover:opacity-20 transition duration-1000 hidden md:block"></div>
                   <div className="relative bg-black md:bg-[#264653] md:rounded-[2.5rem] overflow-hidden md:border border-white/10 md:shadow-3xl h-full w-full flex items-center justify-center">
                      {selectedLesson ? (
@@ -642,7 +642,7 @@ function LessonItem({ lesson, idx, isActive, isDone, isLocked, onClick }) {
 
 function AccessGate({ type, lesson, chapter, course, onGoPrev, onEnrol }) {
    if (type === 'sequential') return (
-    <div className="aspect-video bg-[#264653] flex flex-col items-center justify-center text-white p-10 text-center relative overflow-hidden">
+    <div className="w-full py-12 md:aspect-video bg-[#264653] flex flex-col items-center justify-center text-white p-10 text-center relative overflow-hidden">
        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-64 h-64 bg-[#2A9D8F]/10 blur-[100px] pointer-events-none"></div>
        <div className="w-24 h-24 bg-[#2A9D8F]/10 rounded-[2rem] flex items-center justify-center text-[#2A9D8F] mb-8 border border-[#2A9D8F]/20 shadow-2xl"><FaLockOpen size={32} className="opacity-50" /></div>
        <h2 className="text-3xl font-black mb-4 tracking-tight text-white">المحتوى قيد الانتظار ⛓️</h2>
@@ -654,7 +654,7 @@ function AccessGate({ type, lesson, chapter, course, onGoPrev, onEnrol }) {
    );
 
    return (
-    <div className="aspect-video bg-[#264653] flex flex-col items-center justify-center text-white p-6 md:p-10 text-center relative overflow-hidden">
+    <div className="w-full py-12 md:aspect-video bg-[#264653] flex flex-col items-center justify-center text-white p-6 md:p-10 text-center relative overflow-hidden">
        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-64 h-64 bg-red-600/10 blur-[100px] pointer-events-none"></div>
        
        <div className="relative z-10 mb-6 md:mb-10">

@@ -1094,43 +1094,47 @@ export default function StudentDashboard() {
          )}
       </div>
 
-      {/* 📚 Digital Academy Section - WOW FACTOR - Only visible in instructor mode */}
-      {centerSettings.center_type === 'instructor' && (
-        <div className="max-w-4xl mx-auto mb-12 animate-in fade-in slide-in-from-bottom-4">
-          <Link href="/student/courses" className="block relative bg-white rounded-xl p-6 md:p-10 shadow-md group hover:shadow-lg transition-all overflow-hidden border-b-8 border-[#2A9D8F]">
-             <div className="flex flex-col md:flex-row items-center gap-8 relative z-10">
-                <div className="w-20 h-20 bg-[#2A9D8F] text-[#F8F9FA] rounded-2xl flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform duration-500">
-                   <FaChalkboardTeacher size={36} />
+      {/* 💳 Digital Student ID Card - Replacing the old banner */}
+      <div className="max-w-4xl mx-auto mb-12 animate-in fade-in slide-in-from-bottom-4">
+        <div className="relative bg-gradient-to-r from-[#264653] to-[#2A9D8F] rounded-[2.5rem] p-8 md:p-10 shadow-xl overflow-hidden flex flex-col md:flex-row items-center gap-8 border border-white/10">
+            {/* Background Decorations */}
+            <div className="absolute top-0 right-0 w-64 h-64 bg-white/5 rounded-full blur-[80px] -translate-y-20 translate-x-20"></div>
+            <div className="absolute bottom-0 left-0 w-40 h-40 bg-[#E9C46A]/10 rounded-full blur-[60px] translate-y-10 -translate-x-10"></div>
+            
+            <div className="flex-1 text-center md:text-right relative z-10">
+               <div className="inline-block bg-white/20 backdrop-blur-md border border-white/30 text-white px-4 py-1.5 rounded-full text-[10px] font-black tracking-widest uppercase mb-4">
+                  بطاقة الدخول الذكية <FaQrcode className="inline mr-1" />
+               </div>
+               <h2 className="text-3xl md:text-4xl font-black text-white mb-2">{studentName || 'طالب متميز'}</h2>
+               <p className="text-white/80 font-bold text-sm md:text-base flex items-center justify-center md:justify-start gap-2">
+                  <FaCheckCircle className="text-[#E9C46A]" /> الكود التعريفي: <span className="font-mono tracking-wider bg-black/20 px-2 py-0.5 rounded">{uniqueCode || '-----'}</span>
+               </p>
+               <p className="text-white/60 text-[10px] mt-4 max-w-sm font-bold mx-auto md:mx-0">
+                  أظهر هذا الكود (QR) عند دخول السنتر لتسجيل حضورك تلقائياً. يتم تحديث الكود باستمرار لحمايتك.
+               </p>
+            </div>
+
+            <div className="relative z-10 bg-white p-4 rounded-[2rem] shadow-2xl shrink-0 group">
+                <div className="absolute inset-0 bg-[#E9C46A] blur-2xl opacity-20 group-hover:opacity-40 transition-opacity rounded-full"></div>
+                <div className="relative bg-white rounded-2xl p-2 border border-slate-100">
+                   {qrToken ? (
+                       <QRCodeSVG value={qrToken} size={140} level="H" fgColor="#264653" />
+                   ) : (
+                       <div className="w-[140px] h-[140px] bg-slate-100 flex items-center justify-center rounded-xl">
+                          <FaSync className="animate-spin text-slate-300 text-2xl" />
+                       </div>
+                   )}
                 </div>
-                <div className="text-center md:text-right flex-1">
-                   <h2 className="text-3xl font-black text-[#264653] mb-2">منصة الأستاذ عبدالرحمن خالد 🚀</h2>
-                   <p className="text-sm md:text-base text-slate-500 font-bold leading-relaxed">
-                      من هنا ابدأ رحلتك الأونلاين! شاهد فيديوهات الشرح، حمّل المذكرات، وتابع حصصك المسجلة بجودة عالية وفي أي وقت.
-                   </p>
+                <div className="text-center mt-3 flex items-center justify-center gap-1.5 text-emerald-600 font-black text-[10px]">
+                   <span className="relative flex h-2.5 w-2.5">
+                     <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+                     <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-emerald-500"></span>
+                   </span>
+                   نشط ومحمي
                 </div>
-                <div className="flex flex-col items-center gap-2">
-                   <div className="bg-[#F8F9FA] text-[#2A9D8F] px-6 py-3 rounded-2xl font-black text-sm group-hover:bg-[#2A9D8F] group-hover:text-[#F8F9FA] transition-all">
-                      تصفح المواد الآن
-                   </div>
-                   <div className="flex -space-x-3 rtl:space-x-reverse">
-                      {[1,2,3,4].map(i => (
-                        <div key={i} className="w-8 h-8 rounded-full border-2 border-white bg-slate-200 overflow-hidden">
-                           <img src={`https://i.pravatar.cc/100?u=${i+10}`} alt="student" />
-                        </div>
-                      ))}
-                      <div className="w-8 h-8 rounded-full border-2 border-white bg-blue-100 flex items-center justify-center text-[8px] font-black text-blue-600">+500</div>
-                   </div>
-                </div>
-             </div>
-  
-             {/* Decorative UI elements */}
-             <div className="absolute top-0 left-0 p-8 opacity-[0.03] group-hover:opacity-[0.05] transition-opacity">
-                <FaPlayCircle size={250} className="transform -rotate-12" />
-             </div>
-              <div className="absolute -bottom-10 -right-10 w-40 h-40 bg-blue-500/5 rounded-full blur-3xl"></div>
-          </Link>
+            </div>
         </div>
-      )}
+      </div>
 
       {/* ⚡ Electronic Exams Section */}
       {electronicExams.length > 0 && (
