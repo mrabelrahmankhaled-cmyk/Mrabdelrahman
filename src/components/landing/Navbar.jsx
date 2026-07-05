@@ -139,7 +139,7 @@ export default function Navbar() {
       >
         {/* ── Logo ── */}
         <Link href="/" className="flex items-center gap-2 shrink-0 mr-2 md:mr-4" aria-label="الرئيسية - الدكتور عبدالرحمن خالد">
-          <img src="/logo.png" alt="شعار الدكتور عبدالرحمن خالد" className="h-10 md:h-12 w-auto object-contain" />
+          <img src="/logo.png" alt="شعار الدكتور عبدالرحمن خالد" className="h-12 md:h-16 w-auto object-contain" />
         </Link>
 
         {/* ── Nav Links ── */}
@@ -232,7 +232,7 @@ export default function Navbar() {
         <div className="flex items-center justify-between px-4 py-3">
           {/* Logo */}
           <Link href="/" className="mr-1" aria-label="الرئيسية - الدكتور عبدالرحمن خالد">
-            <img src="/logo.png" alt="شعار الدكتور عبدالرحمن خالد" className="h-8 md:h-10 w-auto object-contain" />
+            <img src="/logo.png" alt="شعار الدكتور عبدالرحمن خالد" className="h-10 md:h-12 w-auto object-contain" />
           </Link>
 
           <div className="flex items-center gap-1">

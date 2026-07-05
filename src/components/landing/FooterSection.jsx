@@ -79,7 +79,7 @@ export default function FooterSection() {
           <div className="lg:col-span-2 flex flex-col gap-5">
             {/* Logo mark */}
             <div className="flex flex-col gap-2 mr-1 md:mr-2">
-              <img src="/logo.png" alt="شعار الدكتور عبدالرحمن خالد" className="h-14 md:h-16 w-auto object-contain" />
+              <img src="/logo.png" alt="شعار الدكتور عبدالرحمن خالد" className="h-16 md:h-20 w-auto object-contain" />
               <p className="text-[#264653]/50 text-xs mt-0.5 tracking-wide">
                 منصة الكيمياء الأولى
               </p>
