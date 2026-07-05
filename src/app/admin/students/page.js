@@ -678,79 +678,33 @@ const result = await response.json();
         const targetEditId = linkOnlineStudentId || editId;
         const originalStudent = studentsData?.students?.find(s => s.id === targetEditId) || { id: targetEditId };
         
-        // 🧐 فحص هل هذا حساب Quick Add يحتاج تفعيل؟
-        // لا نحتاج للتفعيل إذا كنا نقوم بضم طالب أونلاين (لأنه يمتلك حساب بالفعل)
-        const needsActivation = !linkOnlineStudentId && (!originalStudent?.unique_id || !originalStudent?.access_code || originalStudent?.access_code === '0');
+        // بناءً على طلب العميل: تم إيقاف إنشاء حسابات (auth.users) لطلاب السنتر.
+        // فقط نضمن أن الطالب لديه unique_id و access_code إذا كانت مفقودة.
+        let generatedUniqueId = originalStudent?.unique_id;
+        let generatedAccessCode = originalStudent?.access_code;
 
-        if (needsActivation) {
-            // 🔒 حماية التفعيل: لو حاول يفعل حساب "إضافة سريعة" وهو معندوش الصلاحية
-            if (!hasPortalAccess) {
-                toast.error('🔒 لا يمكنك تفعيل حساب المنصة لهذا الطالب لأن باقتك لا تدعم هذه الميزة.', { duration: 5000 });
-                setIsSubmitting(false);
-                return;
-            }
+        if (!generatedUniqueId) {
+            generatedUniqueId = (linkOnlineStudentId ? "ON-" : "S-") + Math.floor(1000 + Math.random() * 9000);
+            dataToSave.unique_id = generatedUniqueId;
         }
 
-        if (needsActivation) {
-            console.log("🛠️ جاري تفعيل حساب Quick Add...");
-            
-            // 1. توليد البيانات الناقصة
-            const uniqueId = originalStudent?.unique_id || ("S-" + Math.floor(1000 + Math.random() * 9000));
-            const accessCode = (originalStudent?.access_code && originalStudent?.access_code !== '0') 
-                ? originalStudent.access_code 
-                : Math.floor(1000 + Math.random() * 9000).toString();
-            
-            const centerPrefix = centerId.split('-')[0];
-            const technicalEmail = `${uniqueId.toLowerCase()}@${centerPrefix}.center.com`;
-            const password = formData.phone || "12345678";
+        if (!generatedAccessCode || generatedAccessCode === '0') {
+            generatedAccessCode = Math.floor(1000 + Math.random() * 9000).toString();
+            dataToSave.access_code = generatedAccessCode;
+        }
 
-            // 2. إرسال طلب PUT للـ API (عشان ينشئ اليوزر ويحدث البيانات)
-            const response = await fetch('/api/students', {
-                method: 'PUT', 
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({
-                    id: targetEditId, 
-                    ...dataToSave,
-                    unique_id: uniqueId,
-                    access_code: accessCode,
-                    email: technicalEmail, 
-                    password: password,    
-                    create_auth_user: true 
-                })
-            });
+        // 🚗 تحديث قاعدة البيانات مباشرة
+        const { error: updateError } = await supabaseBrowser
+            .from('students')
+            .update(dataToSave)
+            .eq('id', targetEditId);
 
-            // لو الـ API مش بيدعم PUT، الكود هينزل للـ Catch
-            if (!response.ok) {
-                 console.warn("API Activation Failed, falling back to DB update only.");
-                 throw new Error("فشل تفعيل الحساب عبر الـ API، تأكد أن السيرفر يدعم التعديل.");
-            } else {
-                toast.success(`🔐 تم تفعيل الحساب!\nكود: ${uniqueId}`, { icon: '👏' });
-                navigator.clipboard.writeText(`👤 كود: ${uniqueId}\n🔑 سر: ${password}\n👨‍👩‍👧‍👦 ولي أمر: ${accessCode}`);
-            }
+        if (updateError) throw updateError;
 
+        if (linkOnlineStudentId) {
+            toast.success('🎉 تم ضم طالب الأونلاين للسنتر وتحديث بياناته بنجاح!');
         } else {
-            // إذا كان طالب أونلاين مسجل قديماً وليس له كود سنتر، نولد له كود
-            if (linkOnlineStudentId) {
-                if (!originalStudent?.unique_id) {
-                    dataToSave.unique_id = "ON-" + Math.floor(1000 + Math.random() * 9000);
-                }
-                if (!originalStudent?.access_code || originalStudent?.access_code === '0') {
-                    dataToSave.access_code = Math.floor(1000 + Math.random() * 9000).toString();
-                }
-            }
-
-            // 🚗 سيناريو التعديل العادي أو ضم طالب أونلاين: داتابيز بس
-            const { error: updateError } = await supabaseBrowser
-              .from('students')
-              .update(dataToSave)
-              .eq('id', targetEditId);
-
-            if (updateError) throw updateError;
-            if (linkOnlineStudentId) {
-                toast.success('🎉 تم ضم طالب الأونلاين للسنتر وتحديث بياناته بنجاح!');
-            } else {
-                toast.success('تم تعديل البيانات بنجاح ');
-            }
+            toast.success('تم تعديل البيانات بنجاح ');
         }
 
         await refetch();
