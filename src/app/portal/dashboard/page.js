@@ -856,8 +856,8 @@ export default function StudentDashboard() {
       <div className="flex justify-between items-center w-full bg-white p-4 sticky top-0 z-40 shadow-sm md:rounded-2xl mb-4 md:mb-6 md:mx-auto max-w-4xl">
         {/* Right side: Greeting / Logo */}
         <div className="flex items-center gap-3">
-          <div className="w-9 h-9 bg-[#2A9D8F] rounded-xl flex items-center justify-center text-white font-bold text-sm shadow-sm">
-            {centerSettings.logo}
+          <div className="h-9 flex items-center shrink-0">
+            <img src="/logo.png" alt="Logo" className="h-full w-auto object-contain" />
           </div>
           <span className="font-black text-[#264653] text-sm">
             {dailyGreeting.title}، {studentName || 'بطل'}
@@ -907,20 +907,16 @@ export default function StudentDashboard() {
           
           <div className="flex-1 z-10 w-full mb-4 md:mb-8">
             <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 md:gap-6">
-              <div className="flex items-center gap-3 w-full md:w-auto">
-                <div className="w-12 h-12 md:w-16 md:h-16 bg-[#2A9D8F] rounded-xl md:rounded-2xl flex items-center justify-center shadow-lg overflow-hidden shrink-0">
-                  {centerSettings.logo_url ? (
-                    <img 
-                      src={centerSettings.logo_url} 
-                      alt="Center Logo" 
-                      className="w-full h-full object-cover"
-                    />
-                  ) : (
-                    <span className="text-[#F8F9FA] text-lg md:text-2xl font-black">{centerSettings.logo}</span>
-                  )}
+              <div className="flex flex-col items-start gap-3 w-full md:w-auto">
+                <div className="h-16 md:h-20 flex items-center justify-start shrink-0">
+                  <img 
+                    src="/logo.png" 
+                    alt="Center Logo" 
+                    className="h-full w-auto object-contain"
+                  />
                 </div>
                 <div className="flex-1 min-w-0">
-                  <h1 className="text-base md:text-2xl font-black text-[#F8F9FA] leading-tight">
+                  <h1 className="text-base md:text-2xl font-black text-[#F8F9FA] leading-tight mt-1">
                     أهلاً بك في منصتنا
                   </h1>
                   <p className="text-[9px] md:text-sm text-gray-300 font-bold mt-1 line-clamp-1">{centerSettings.description}</p>
