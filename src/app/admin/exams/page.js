@@ -231,7 +231,7 @@ export default function ExamsPage() {
       if (rError) throw rError;
 
       // 2. Fetch students who should be in this exam
-      let studentsQuery = supabase.from('students').select('id, name, unique_id, group_ids, phone, parent_phone').eq('center_id', centerId);
+      let studentsQuery = supabase.from('students').select('id, name, unique_id, group_ids, phone, parent_phone').or(`center_id.eq.${centerId},center_id.is.null`);
       
       // If exam is for a specific group, we filter by that
       // If it's for a course, we might filter by enrolled_courses (but center usually does by group)

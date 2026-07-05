@@ -106,21 +106,25 @@ export default function StudentDashboard() {
     return () => supabase.removeChannel(channel);
   };
 
-  // 10️⃣ دوال الجلب المنفصلة للأداء (Separation of Concerns)
+  // 10️⃣ جلب وتحديث الإشعارات فقط (Separation of Concerns)
   const refreshNotificationsOnly = async (userId) => {
-    // التحقق من وجود center_id في localStorage أو استخدام centerId من الـ hook
+    // 📌 جلب center_id من localStorage أو centerId من الـ hook
     const currentCenterId = centerId || localStorage.getItem('active_center_id');
-    if (!currentCenterId) return;
     
     if (!userId) return;
 
-    const { data: notifs, error } = await supabase
+    let notifsQuery = supabase
         .from('notifications')
         .select(`*, notification_views!left (id)`)
         .eq('student_id', userId)
-        .eq('center_id', currentCenterId)
         .order('created_at', { ascending: false })
         .limit(30);
+
+    if (currentCenterId) {
+        notifsQuery = notifsQuery.eq('center_id', currentCenterId);
+    }
+
+    const { data: notifs, error } = await notifsQuery;
 
     if (error) {
         console.error("DEBUG: ❌ Fetch Notifications Error:", error);
@@ -374,7 +378,7 @@ export default function StudentDashboard() {
       
       let query = supabase
         .from('students')
-        .select('name, group_ids, unique_id, wallet_balance, total_debt, enrolled_courses')
+        .select('name, grade, group_ids, unique_id, wallet_balance, total_debt, enrolled_courses')
         .eq('id', userId);
         
       if (currentCenterId) {
@@ -447,8 +451,6 @@ export default function StudentDashboard() {
           
         if (currentCenterId) {
           eExamsQuery = eExamsQuery.eq('center_id', currentCenterId);
-        } else {
-          eExamsQuery = eExamsQuery.is('center_id', null);
         }
           
         const { data: eExams } = await eExamsQuery;
@@ -464,7 +466,8 @@ export default function StudentDashboard() {
           if (takenExamIds.has(ex.id)) return false;
 
           return (!ex.group_id || studentGroups.includes(ex.group_id)) && 
-                 (!ex.course_id || studentCourses.includes(ex.course_id));
+                   (!ex.course_id || studentCourses.includes(ex.course_id)) && 
+                   (!ex.grade || ex.grade === enrollment?.grade);
         }) || [];
         setElectronicExams(enrolledExams);
 
@@ -1488,3 +1491,6 @@ export default function StudentDashboard() {
     </div>
   );
 }
+
+
+

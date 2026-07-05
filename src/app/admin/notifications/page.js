@@ -72,7 +72,7 @@ export default function AdminNotificationsPage() {
                 supabaseBrowser.from('educational_stages').select('*').eq('center_id', centerId).order('sort_order', { ascending: true }),
                 supabaseBrowser.from('courses').select('id, name, grade, instructors(name)').eq('center_id', centerId),
                 supabaseBrowser.from('groups').select('id, name, course_id').eq('center_id', centerId),
-                supabaseBrowser.from('students').select(`id, name, grade, group_ids`).eq('center_id', centerId)
+                supabaseBrowser.from('students').select(`id, name, grade, group_ids, enrolled_courses`).or(`center_id.eq.${centerId},center_id.is.null`)
             ]);
 
             setStages(stagesRes.data || []);
@@ -199,8 +199,9 @@ export default function AdminNotificationsPage() {
 
     const handleSend = async (e) => {
         e.preventDefault();
-        if (targetType === 'group' && !selectedTargetId) {
-             return toast.error('يرجى تحديد المجموعة المستهدفة');
+        // Removed restriction requiring a specific group. If no group is selected, it will send to all filtered courses.
+        if (targetType === 'grade' && !selectedGrade) {
+             return toast.error('يرجى تحديد الصف الدراسي');
         }
         if (targetType === 'student' && !selectedTargetId) {
              return toast.error('يرجى اختيار الطالب المستهدف');
@@ -214,8 +215,18 @@ export default function AdminNotificationsPage() {
             let targetList = [];
             if (targetType === 'all') {
                 targetList = students;
+            } else if (targetType === 'grade') {
+                targetList = students.filter(s => s.grade === selectedGrade);
             } else if (targetType === 'group') {
-                targetList = students.filter(s => s.group_ids_array?.includes(selectedTargetId));
+                if (selectedTargetId) {
+                    targetList = students.filter(s => s.group_ids_array?.includes(selectedTargetId));
+                } else {
+                    const validCourseIds = filteredCourses.map(c => c.id);
+                    targetList = students.filter(s => 
+                        s.enrolled_courses?.some(cid => validCourseIds.includes(cid)) || 
+                        (s.group_ids_array && s.group_ids_array.some(gid => filteredGroups.some(g => g.id === gid)))
+                    );
+                }
             } else if (targetType === 'student') {
                 const s = students.find(x => x.id === selectedTargetId);
                 if (s) targetList = [s];
@@ -336,10 +347,11 @@ export default function AdminNotificationsPage() {
                                 {/* 🎯 Target Selection */}
                                 <div className="space-y-4">
                                     <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest block mr-1">1. تحديد نطاق الإرسال</label>
-                                    <div className="grid grid-cols-3 gap-3">
+                                    <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
                                         {[
                                             { id: 'all', label: 'الكل', icon: <FaUsers /> },
-                                            { id: 'group', label: 'مجموعة', icon: <FaLayerGroup /> },
+                                            { id: 'grade', label: 'صف دراسي', icon: <FaTag /> },
+                                            { id: 'group', label: 'كورس/مجموعة', icon: <FaLayerGroup /> },
                                             { id: 'student', label: 'طالب', icon: <FaUser /> },
                                         ].map(type => (
                                             <button 
@@ -401,7 +413,7 @@ export default function AdminNotificationsPage() {
                                                         onChange={(e) => setSelectedTargetId(e.target.value)}
                                                         className="w-full h-12 bg-white border border-slate-200 rounded-xl px-4 text-xs font-black outline-none focus:ring-2 ring-blue-500/10 transition-all appearance-none"
                                                     >
-                                                        <option value="">-- اختر مجموعة --</option>
+                                                        <option value="">-- كل المجموعات (والطلاب بدون مجموعة) --</option>
                                                         {filteredGroups.map(g => (
                                                             <option key={g.id} value={g.id}>{g.name}</option>
                                                         ))}

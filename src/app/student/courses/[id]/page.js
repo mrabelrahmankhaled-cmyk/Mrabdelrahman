@@ -260,17 +260,54 @@ export default function StudentCourseView() {
         <div className="flex-1 overflow-y-auto p-6 space-y-4 custom-scrollbar">
            
            {/* General Lessons (No Chapter) */}
-           {lessons.filter(l => !l.chapter_id).map((lesson, idx) => (
-             <LessonItem 
-               key={lesson.id} 
-               lesson={lesson} 
-               idx={idx} 
-               isActive={selectedLesson?.id === lesson.id}
-               isDone={progress.includes(lesson.id)}
-               isLocked={(!isEnrolled && !lesson.is_free && !unlockedLessons.includes(lesson.id) && !unlockedChapters.includes(lesson.chapter_id)) || !isLessonAccessible(lesson, idx)}
-               onClick={() => { setSelectedLesson(lesson); setSelectedIndex(idx); if (window.innerWidth < 768) setSidebarOpen(false); }}
-             />
-           ))}
+           {lessons.filter(l => !l.chapter_id).map((lesson, idx) => {
+             const lessonExams = courseExams.filter(e => e.lesson_id === lesson.id || e.id === lesson.exam_id);
+             return (
+               <div key={lesson.id} className="space-y-1 mb-4">
+                 <LessonItem 
+                   lesson={lesson} 
+                   idx={idx} 
+                   isActive={selectedLesson?.id === lesson.id}
+                   isDone={progress.includes(lesson.id)}
+                   isLocked={(!isEnrolled && !lesson.is_free && !unlockedLessons.includes(lesson.id) && !unlockedChapters.includes(lesson.chapter_id)) || !isLessonAccessible(lesson, idx)}
+                   onClick={() => { setSelectedLesson(lesson); setSelectedIndex(idx); if (window.innerWidth < 768) setSidebarOpen(false); }}
+                 />
+                 {lessonExams.map(exam => {
+                   const isUnlocked = isExamUnlocked(exam, []);
+                   return isUnlocked ? (
+                     <Link 
+                       key={exam.id}
+                       href={`/student/exams/${exam.id}`}
+                       className="mx-2 p-3 bg-[#2A9D8F]/10 hover:bg-[#2A9D8F]/20 border border-[#2A9D8F]/20 rounded-xl flex items-center justify-between group transition-all"
+                     >
+                        <div className="flex items-center gap-3">
+                           <div className="w-8 h-8 bg-[#2A9D8F] text-white rounded-lg flex items-center justify-center shadow-lg shadow-[#2A9D8F]/20">
+                              <FaTrophy size={12} />
+                           </div>
+                           <span className="text-[11px] font-black text-[#264653]">تقييم: {exam.title}</span>
+                        </div>
+                        <FaChevronLeft className="text-[#2A9D8F]/50" size={8} />
+                     </Link>
+                   ) : (
+                     <div 
+                       key={exam.id}
+                       className="mx-2 p-3 bg-gray-200 border border-gray-300 rounded-xl flex flex-col justify-center opacity-70 cursor-not-allowed transition-all"
+                     >
+                        <div className="flex items-center justify-between w-full">
+                          <div className="flex items-center gap-3">
+                             <div className="w-8 h-8 bg-gray-400 text-white rounded-lg flex items-center justify-center shadow-md">
+                                <FaLock size={12} />
+                             </div>
+                             <span className="text-[11px] font-black text-gray-500">تقييم: {exam.title}</span>
+                          </div>
+                        </div>
+                        <p className="text-[8px] font-bold text-orange-400 mt-2 text-right">🔒 يجب إتمام مشاهدة الحصة أولاً لتتمكن من أداء الامتحان.</p>
+                     </div>
+                   );
+                 })}
+               </div>
+             );
+           })}
 
            {/* Chapter Based Lessons */}
            {chapters.map((chapter, cIdx) => {
