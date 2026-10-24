@@ -190,9 +190,9 @@ export const AuthProvider = ({ children, initialUser = null, initialRole = null,
         }
 
         // 2. التحقق من الـ LocalStorage لو مفيش في الـ URL
-        if (!targetCid) {
+        if (!targetCid && typeof window !== 'undefined') {
             const savedCid = localStorage.getItem("active_center_id");
-            if (savedCid && savedCid !== 'null' && savedCid !== 'undefined') targetCid = savedCid;
+            if (savedCid && savedCid !== 'null' && savedCid !== 'undefined' && savedCid.trim() !== '') targetCid = savedCid;
         }
 
         // 3. التحقق من اليوزر والبروفايل (موظفين أو طلاب)
@@ -269,7 +269,13 @@ export const AuthProvider = ({ children, initialUser = null, initialRole = null,
                 .eq('id', targetCid)
                 .single();
 
-            if (centerError) console.error("❌ Center Data Fetch Error:", centerError);
+            if (centerError) {
+                console.warn("⚠️ Center Data Fetch Warning:", centerError.message || centerError.code || JSON.stringify(centerError));
+                if (typeof window !== 'undefined') {
+                    localStorage.removeItem("active_center_id");
+                }
+                targetCid = null;
+            }
 
             if (centerData) {
                 const isExpired = centerData.subscription_end_date && new Date(centerData.subscription_end_date) < new Date();

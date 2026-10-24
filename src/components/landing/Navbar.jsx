@@ -70,7 +70,7 @@ const CloseIcon = ({ className }) => (
 // Nav Links Data
 // ────────────────────────────────────────────────────────────
 const NAV_LINKS = [
-  { label: 'الرئيسية', href: '#' },
+  { label: 'الرئيسية', href: '/' },
   { label: 'المميزات', href: '#features' },
   { label: 'الأسعار', href: '#pricing' },
   { label: 'اتصل بنا', href: '#contact' },

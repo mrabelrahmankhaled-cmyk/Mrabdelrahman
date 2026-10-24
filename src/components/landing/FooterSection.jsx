@@ -6,12 +6,12 @@ import Link from 'next/link';
 // Links data — edit here to update all columns
 // ─────────────────────────────────────────────────────────────
 const PAGE_LINKS = [
-  { label: 'الرئيسية',    href: '#' },
+  { label: 'الرئيسية',    href: '/' },
   { label: 'المميزات',    href: '#features' },
-  { label: 'كورساتنا',   href: '#courses' },
-  { label: 'عن الدكتور', href: '#about' },
   { label: 'الأسعار',    href: '#pricing' },
   { label: 'اتصل بنا',   href: '#contact' },
+  { label: 'تسجيل الدخول', href: '/login' },
+  { label: 'إنشاء حساب جديد', href: '/register' },
 ];
 
 const SOCIAL_LINKS = [
@@ -68,8 +68,9 @@ const SOCIAL_LINKS = [
 export default function FooterSection() {
   return (
     <footer
+      id="contact"
       dir="rtl"
-      className="bg-[#F8F9FA] border-t-4 border-[#2A9D8F]"
+      className="bg-[#F8F9FA] border-t-4 border-[#2A9D8F] scroll-mt-10"
     >
       {/* ── Main footer content ────────────────────────── */}
       <div className="max-w-7xl mx-auto px-6 md:px-16 lg:px-20 py-16">

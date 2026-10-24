@@ -112,8 +112,9 @@ export default function CoursesSection() {
     <section
       id="courses"
       dir="rtl"
-      className="bg-[#264653] py-20 px-6 md:px-16 lg:px-20 overflow-hidden"
+      className="bg-[#264653] py-20 px-6 md:px-16 lg:px-20 overflow-hidden relative"
     >
+      <div id="pricing" className="absolute -top-10" />
       {/* ── Section header ── */}
       <div className="max-w-7xl mx-auto mb-12">
         <div className="flex items-center justify-between flex-wrap gap-4">

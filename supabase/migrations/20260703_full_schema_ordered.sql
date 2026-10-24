@@ -261,7 +261,7 @@ CREATE TABLE IF NOT EXISTS public.groups (
   created_at timestamp with time zone DEFAULT timezone('utc'::text, now()),
   center_id uuid,
   CONSTRAINT groups_pkey PRIMARY KEY (id),
-  CONSTRAINT groups_course_id_fkey FOREIGN KEY (course_id) REFERENCES public.courses(id)
+  CONSTRAINT groups_course_id_fkey FOREIGN KEY (course_id) REFERENCES public.courses(id) ON DELETE CASCADE
 );
 
 -- lesson_chapters بدون exam_id FK (circular مع exams)
@@ -277,7 +277,7 @@ CREATE TABLE IF NOT EXISTS public.lesson_chapters (
   exam_id uuid, -- FK يتضاف بعدين
   CONSTRAINT lesson_chapters_pkey PRIMARY KEY (id),
   CONSTRAINT lesson_chapters_center_id_fkey FOREIGN KEY (center_id) REFERENCES public.centers(id),
-  CONSTRAINT lesson_chapters_course_id_fkey FOREIGN KEY (course_id) REFERENCES public.courses(id)
+  CONSTRAINT lesson_chapters_course_id_fkey FOREIGN KEY (course_id) REFERENCES public.courses(id) ON DELETE CASCADE
 );
 
 -- exams بدون lesson_id و chapter_id FK (circular)
@@ -302,7 +302,7 @@ CREATE TABLE IF NOT EXISTS public.exams (
   lesson_id uuid, -- FK يتضاف بعدين
   chapter_id uuid, -- FK يتضاف بعدين
   CONSTRAINT exams_pkey PRIMARY KEY (id),
-  CONSTRAINT exams_course_id_fkey FOREIGN KEY (course_id) REFERENCES public.courses(id),
+  CONSTRAINT exams_course_id_fkey FOREIGN KEY (course_id) REFERENCES public.courses(id) ON DELETE CASCADE,
   CONSTRAINT exams_group_id_fkey FOREIGN KEY (group_id) REFERENCES public.groups(id),
   CONSTRAINT exams_instructor_id_fkey FOREIGN KEY (instructor_id) REFERENCES public.instructors(id)
 );
@@ -331,7 +331,7 @@ CREATE TABLE IF NOT EXISTS public.lessons (
   CONSTRAINT lessons_pkey PRIMARY KEY (id),
   CONSTRAINT lessons_chapter_id_fkey FOREIGN KEY (chapter_id) REFERENCES public.lesson_chapters(id),
   CONSTRAINT lessons_prerequisite_lesson_id_fkey FOREIGN KEY (prerequisite_lesson_id) REFERENCES public.lessons(id),
-  CONSTRAINT lessons_course_id_fkey FOREIGN KEY (course_id) REFERENCES public.courses(id)
+  CONSTRAINT lessons_course_id_fkey FOREIGN KEY (course_id) REFERENCES public.courses(id) ON DELETE CASCADE
 );
 
 -- ✅ الآن نضيف الـ circular FK constraints
@@ -392,7 +392,7 @@ CREATE TABLE IF NOT EXISTS public.question_bank (
   created_at timestamp with time zone DEFAULT now(),
   CONSTRAINT question_bank_pkey PRIMARY KEY (id),
   CONSTRAINT question_bank_center_id_fkey FOREIGN KEY (center_id) REFERENCES public.centers(id),
-  CONSTRAINT question_bank_course_id_fkey FOREIGN KEY (course_id) REFERENCES public.courses(id)
+  CONSTRAINT question_bank_course_id_fkey FOREIGN KEY (course_id) REFERENCES public.courses(id) ON DELETE CASCADE
 );
 
 CREATE TABLE IF NOT EXISTS public.exam_questions (
@@ -402,8 +402,8 @@ CREATE TABLE IF NOT EXISTS public.exam_questions (
   sort_order integer DEFAULT 0,
   created_at timestamp with time zone DEFAULT now(),
   CONSTRAINT exam_questions_pkey PRIMARY KEY (id),
-  CONSTRAINT exam_questions_exam_id_fkey FOREIGN KEY (exam_id) REFERENCES public.exams(id),
-  CONSTRAINT exam_questions_question_id_fkey FOREIGN KEY (question_id) REFERENCES public.question_bank(id)
+  CONSTRAINT exam_questions_exam_id_fkey FOREIGN KEY (exam_id) REFERENCES public.exams(id) ON DELETE CASCADE,
+  CONSTRAINT exam_questions_question_id_fkey FOREIGN KEY (question_id) REFERENCES public.question_bank(id) ON DELETE CASCADE
 );
 
 CREATE TABLE IF NOT EXISTS public.exam_results (
@@ -415,7 +415,7 @@ CREATE TABLE IF NOT EXISTS public.exam_results (
   teacher_comment text,
   created_at timestamp with time zone DEFAULT now(),
   CONSTRAINT exam_results_pkey PRIMARY KEY (id),
-  CONSTRAINT exam_results_exam_id_fkey FOREIGN KEY (exam_id) REFERENCES public.exams(id),
+  CONSTRAINT exam_results_exam_id_fkey FOREIGN KEY (exam_id) REFERENCES public.exams(id) ON DELETE CASCADE,
   CONSTRAINT exam_results_student_id_fkey FOREIGN KEY (student_id) REFERENCES public.students(id)
 );
 
@@ -429,7 +429,7 @@ CREATE TABLE IF NOT EXISTS public.exam_submissions (
   completed_at timestamp with time zone DEFAULT now(),
   created_at timestamp with time zone DEFAULT now(),
   CONSTRAINT exam_submissions_pkey PRIMARY KEY (id),
-  CONSTRAINT exam_submissions_exam_id_fkey FOREIGN KEY (exam_id) REFERENCES public.exams(id),
+  CONSTRAINT exam_submissions_exam_id_fkey FOREIGN KEY (exam_id) REFERENCES public.exams(id) ON DELETE CASCADE,
   CONSTRAINT exam_submissions_student_id_fkey FOREIGN KEY (student_id) REFERENCES public.students(id)
 );
 
@@ -447,7 +447,7 @@ CREATE TABLE IF NOT EXISTS public.student_exam_submissions (
   created_at timestamp with time zone DEFAULT now(),
   CONSTRAINT student_exam_submissions_pkey PRIMARY KEY (id),
   CONSTRAINT student_exam_submissions_center_id_fkey FOREIGN KEY (center_id) REFERENCES public.centers(id),
-  CONSTRAINT student_exam_submissions_exam_id_fkey FOREIGN KEY (exam_id) REFERENCES public.exams(id),
+  CONSTRAINT student_exam_submissions_exam_id_fkey FOREIGN KEY (exam_id) REFERENCES public.exams(id) ON DELETE CASCADE,
   CONSTRAINT student_exam_submissions_student_id_fkey FOREIGN KEY (student_id) REFERENCES public.students(id)
 );
 
@@ -461,8 +461,8 @@ CREATE TABLE IF NOT EXISTS public.student_exam_answers (
   points_earned numeric DEFAULT 0,
   created_at timestamp with time zone DEFAULT now(),
   CONSTRAINT student_exam_answers_pkey PRIMARY KEY (id),
-  CONSTRAINT student_exam_answers_submission_id_fkey FOREIGN KEY (submission_id) REFERENCES public.student_exam_submissions(id),
-  CONSTRAINT student_exam_answers_question_id_fkey FOREIGN KEY (question_id) REFERENCES public.question_bank(id),
+  CONSTRAINT student_exam_answers_submission_id_fkey FOREIGN KEY (submission_id) REFERENCES public.student_exam_submissions(id) ON DELETE CASCADE,
+  CONSTRAINT student_exam_answers_question_id_fkey FOREIGN KEY (question_id) REFERENCES public.question_bank(id) ON DELETE CASCADE,
   CONSTRAINT student_exam_answers_student_id_fkey FOREIGN KEY (student_id) REFERENCES public.students(id)
 );
 
@@ -482,7 +482,7 @@ CREATE TABLE IF NOT EXISTS public.schedule (
   center_id uuid,
   exam_id uuid,
   CONSTRAINT schedule_pkey PRIMARY KEY (id),
-  CONSTRAINT schedule_group_id_fkey FOREIGN KEY (group_id) REFERENCES public.groups(id),
+  CONSTRAINT schedule_group_id_fkey FOREIGN KEY (group_id) REFERENCES public.groups(id) ON DELETE CASCADE,
   CONSTRAINT schedule_room_id_fkey FOREIGN KEY (room_id) REFERENCES public.rooms(id),
   CONSTRAINT schedule_exam_id_fkey FOREIGN KEY (exam_id) REFERENCES public.exams(id)
 );
@@ -513,8 +513,8 @@ CREATE TABLE IF NOT EXISTS public.sessions (
   linked_exam_id uuid,
   CONSTRAINT sessions_pkey PRIMARY KEY (id),
   CONSTRAINT sessions_linked_exam_id_fkey FOREIGN KEY (linked_exam_id) REFERENCES public.exams(id),
-  CONSTRAINT sessions_course_id_fkey FOREIGN KEY (course_id) REFERENCES public.courses(id),
-  CONSTRAINT sessions_group_id_fkey FOREIGN KEY (group_id) REFERENCES public.groups(id)
+  CONSTRAINT sessions_course_id_fkey FOREIGN KEY (course_id) REFERENCES public.courses(id) ON DELETE CASCADE,
+  CONSTRAINT sessions_group_id_fkey FOREIGN KEY (group_id) REFERENCES public.groups(id) ON DELETE CASCADE
 );
 
 
@@ -542,7 +542,7 @@ CREATE TABLE IF NOT EXISTS public.store_products (
   grade text,
   teacher_name text,
   CONSTRAINT store_products_pkey PRIMARY KEY (id),
-  CONSTRAINT store_products_course_id_fkey FOREIGN KEY (course_id) REFERENCES public.courses(id)
+  CONSTRAINT store_products_course_id_fkey FOREIGN KEY (course_id) REFERENCES public.courses(id) ON DELETE CASCADE
 );
 
 CREATE TABLE IF NOT EXISTS public.store_settlements (
@@ -557,7 +557,7 @@ CREATE TABLE IF NOT EXISTS public.store_settlements (
   product_id uuid,
   center_id uuid,
   CONSTRAINT store_settlements_pkey PRIMARY KEY (id),
-  CONSTRAINT fk_settlements_product FOREIGN KEY (product_id) REFERENCES public.store_products(id)
+  CONSTRAINT fk_settlements_product FOREIGN KEY (product_id) REFERENCES public.store_products(id) ON DELETE CASCADE
 );
 
 CREATE TABLE IF NOT EXISTS public.store_sales (
@@ -575,7 +575,7 @@ CREATE TABLE IF NOT EXISTS public.store_sales (
   CONSTRAINT store_sales_pkey PRIMARY KEY (id),
   CONSTRAINT store_sales_settlement_id_fkey FOREIGN KEY (settlement_id) REFERENCES public.store_settlements(id),
   CONSTRAINT store_sales_student_id_fkey FOREIGN KEY (student_id) REFERENCES public.students(id),
-  CONSTRAINT store_sales_product_id_fkey FOREIGN KEY (product_id) REFERENCES public.store_products(id)
+  CONSTRAINT store_sales_product_id_fkey FOREIGN KEY (product_id) REFERENCES public.store_products(id) ON DELETE CASCADE
 );
 
 CREATE TABLE IF NOT EXISTS public.store_returns (
@@ -593,7 +593,7 @@ CREATE TABLE IF NOT EXISTS public.store_returns (
   center_id uuid,
   CONSTRAINT store_returns_pkey PRIMARY KEY (id),
   CONSTRAINT store_returns_original_sale_id_fkey FOREIGN KEY (original_sale_id) REFERENCES public.store_sales(id),
-  CONSTRAINT store_returns_product_id_fkey FOREIGN KEY (product_id) REFERENCES public.store_products(id),
+  CONSTRAINT store_returns_product_id_fkey FOREIGN KEY (product_id) REFERENCES public.store_products(id) ON DELETE CASCADE,
   CONSTRAINT store_returns_created_by_fkey FOREIGN KEY (created_by) REFERENCES auth.users(id)
 );
 
@@ -655,7 +655,7 @@ CREATE TABLE IF NOT EXISTS public.student_payment_transactions (
   CONSTRAINT student_payment_transactions_pkey PRIMARY KEY (id),
   CONSTRAINT student_payment_transactions_student_id_fkey FOREIGN KEY (student_id) REFERENCES public.students(id),
   CONSTRAINT student_payment_transactions_center_id_fkey FOREIGN KEY (center_id) REFERENCES public.centers(id),
-  CONSTRAINT student_payment_transactions_course_id_fkey FOREIGN KEY (course_id) REFERENCES public.courses(id)
+  CONSTRAINT student_payment_transactions_course_id_fkey FOREIGN KEY (course_id) REFERENCES public.courses(id) ON DELETE CASCADE
 );
 
 CREATE TABLE IF NOT EXISTS public.student_subscriptions (
@@ -670,7 +670,7 @@ CREATE TABLE IF NOT EXISTS public.student_subscriptions (
   expires_at timestamp with time zone,
   CONSTRAINT student_subscriptions_pkey PRIMARY KEY (id),
   CONSTRAINT student_subscriptions_student_id_fkey FOREIGN KEY (student_id) REFERENCES public.students(id),
-  CONSTRAINT student_subscriptions_course_id_fkey FOREIGN KEY (course_id) REFERENCES public.courses(id),
+  CONSTRAINT student_subscriptions_course_id_fkey FOREIGN KEY (course_id) REFERENCES public.courses(id) ON DELETE CASCADE,
   CONSTRAINT student_subscriptions_center_id_fkey FOREIGN KEY (center_id) REFERENCES public.centers(id)
 );
 
@@ -841,10 +841,10 @@ CREATE TABLE IF NOT EXISTS public.recharge_codes (
   target_type text DEFAULT 'course'::text,
   chapter_id uuid,
   CONSTRAINT recharge_codes_pkey PRIMARY KEY (id),
-  CONSTRAINT recharge_codes_course_fkey FOREIGN KEY (course_id) REFERENCES public.courses(id),
+  CONSTRAINT recharge_codes_course_fkey FOREIGN KEY (course_id) REFERENCES public.courses(id) ON DELETE CASCADE,
   CONSTRAINT recharge_codes_student_fkey FOREIGN KEY (used_by) REFERENCES public.students(id),
-  CONSTRAINT recharge_codes_lesson_id_fkey FOREIGN KEY (lesson_id) REFERENCES public.lessons(id),
-  CONSTRAINT recharge_codes_chapter_id_fkey FOREIGN KEY (chapter_id) REFERENCES public.lesson_chapters(id)
+  CONSTRAINT recharge_codes_lesson_id_fkey FOREIGN KEY (lesson_id) REFERENCES public.lessons(id) ON DELETE CASCADE,
+  CONSTRAINT recharge_codes_chapter_id_fkey FOREIGN KEY (chapter_id) REFERENCES public.lesson_chapters(id) ON DELETE CASCADE
 );
 
 CREATE TABLE IF NOT EXISTS public.student_online_enrollments (
@@ -858,7 +858,7 @@ CREATE TABLE IF NOT EXISTS public.student_online_enrollments (
   payment_method text DEFAULT 'voucher'::text,
   CONSTRAINT student_online_enrollments_pkey PRIMARY KEY (id),
   CONSTRAINT enrollment_student_fkey FOREIGN KEY (student_id) REFERENCES public.students(id),
-  CONSTRAINT enrollment_course_fkey FOREIGN KEY (course_id) REFERENCES public.courses(id)
+  CONSTRAINT enrollment_course_fkey FOREIGN KEY (course_id) REFERENCES public.courses(id) ON DELETE CASCADE
 );
 
 CREATE TABLE IF NOT EXISTS public.student_lesson_access (
@@ -870,8 +870,8 @@ CREATE TABLE IF NOT EXISTS public.student_lesson_access (
   activated_at timestamp with time zone DEFAULT now(),
   CONSTRAINT student_lesson_access_pkey PRIMARY KEY (id),
   CONSTRAINT student_lesson_access_student_id_fkey FOREIGN KEY (student_id) REFERENCES public.students(id),
-  CONSTRAINT student_lesson_access_lesson_id_fkey FOREIGN KEY (lesson_id) REFERENCES public.lessons(id),
-  CONSTRAINT student_lesson_access_course_id_fkey FOREIGN KEY (course_id) REFERENCES public.courses(id),
+  CONSTRAINT student_lesson_access_lesson_id_fkey FOREIGN KEY (lesson_id) REFERENCES public.lessons(id) ON DELETE CASCADE,
+  CONSTRAINT student_lesson_access_course_id_fkey FOREIGN KEY (course_id) REFERENCES public.courses(id) ON DELETE CASCADE,
   CONSTRAINT student_lesson_access_center_id_fkey FOREIGN KEY (center_id) REFERENCES public.centers(id)
 );
 
@@ -884,8 +884,8 @@ CREATE TABLE IF NOT EXISTS public.student_chapter_access (
   activated_at timestamp with time zone DEFAULT now(),
   CONSTRAINT student_chapter_access_pkey PRIMARY KEY (id),
   CONSTRAINT student_chapter_access_student_id_fkey FOREIGN KEY (student_id) REFERENCES public.students(id),
-  CONSTRAINT student_chapter_access_chapter_id_fkey FOREIGN KEY (chapter_id) REFERENCES public.lesson_chapters(id),
-  CONSTRAINT student_chapter_access_course_id_fkey FOREIGN KEY (course_id) REFERENCES public.courses(id),
+  CONSTRAINT student_chapter_access_chapter_id_fkey FOREIGN KEY (chapter_id) REFERENCES public.lesson_chapters(id) ON DELETE CASCADE,
+  CONSTRAINT student_chapter_access_course_id_fkey FOREIGN KEY (course_id) REFERENCES public.courses(id) ON DELETE CASCADE,
   CONSTRAINT student_chapter_access_center_id_fkey FOREIGN KEY (center_id) REFERENCES public.centers(id)
 );
 
@@ -902,7 +902,7 @@ CREATE TABLE IF NOT EXISTS public.student_lesson_progress (
   center_id uuid,
   CONSTRAINT student_lesson_progress_pkey PRIMARY KEY (id),
   CONSTRAINT progress_student_fkey FOREIGN KEY (student_id) REFERENCES public.students(id),
-  CONSTRAINT progress_lesson_fkey FOREIGN KEY (lesson_id) REFERENCES public.lessons(id),
+  CONSTRAINT progress_lesson_fkey FOREIGN KEY (lesson_id) REFERENCES public.lessons(id) ON DELETE CASCADE,
   CONSTRAINT student_lesson_progress_center_id_fkey FOREIGN KEY (center_id) REFERENCES public.centers(id)
 );
 
@@ -964,7 +964,7 @@ CREATE TABLE IF NOT EXISTS public.lesson_comments (
   parent_id uuid,
   created_at timestamp with time zone DEFAULT now(),
   CONSTRAINT lesson_comments_pkey PRIMARY KEY (id),
-  CONSTRAINT lesson_comments_lesson_id_fkey FOREIGN KEY (lesson_id) REFERENCES public.lessons(id),
+  CONSTRAINT lesson_comments_lesson_id_fkey FOREIGN KEY (lesson_id) REFERENCES public.lessons(id) ON DELETE CASCADE,
   CONSTRAINT lesson_comments_student_id_fkey FOREIGN KEY (student_id) REFERENCES public.students(id),
   CONSTRAINT lesson_comments_staff_id_fkey FOREIGN KEY (staff_id) REFERENCES public.staff_profiles(id),
   CONSTRAINT lesson_comments_parent_id_fkey FOREIGN KEY (parent_id) REFERENCES public.lesson_comments(id)
@@ -984,7 +984,7 @@ CREATE TABLE IF NOT EXISTS public.lesson_discussions (
   sender_type text DEFAULT 'student'::text,
   CONSTRAINT lesson_discussions_pkey PRIMARY KEY (id),
   CONSTRAINT lesson_discussions_center_id_fkey FOREIGN KEY (center_id) REFERENCES public.centers(id),
-  CONSTRAINT lesson_discussions_lesson_id_fkey FOREIGN KEY (lesson_id) REFERENCES public.lessons(id),
+  CONSTRAINT lesson_discussions_lesson_id_fkey FOREIGN KEY (lesson_id) REFERENCES public.lessons(id) ON DELETE CASCADE,
   CONSTRAINT lesson_discussions_student_id_fkey FOREIGN KEY (student_id) REFERENCES public.students(id),
   CONSTRAINT lesson_discussions_staff_id_fkey FOREIGN KEY (staff_id) REFERENCES public.staff_profiles(id),
   CONSTRAINT lesson_discussions_parent_id_fkey FOREIGN KEY (parent_id) REFERENCES public.lesson_discussions(id)
