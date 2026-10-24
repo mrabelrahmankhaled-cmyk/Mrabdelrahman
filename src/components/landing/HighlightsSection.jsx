@@ -126,7 +126,8 @@ function HighlightCard({ title, description, bg, personImage, icon, index }) {
             alt={title}
             width={320}
             height={380}
-            unoptimized
+            loading="lazy"
+            sizes="(max-width: 640px) 100vw, 320px"
             className="
               h-full w-auto object-contain object-bottom
               transition-transform duration-500

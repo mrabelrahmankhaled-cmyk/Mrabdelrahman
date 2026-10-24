@@ -156,7 +156,8 @@ export default function AboutTeacherSection() {
                 alt="الدكتور عبدالرحمن خالد"
                 width={480}
                 height={520}
-                unoptimized
+                loading="lazy"
+                sizes="(max-width: 768px) 100vw, 480px"
                 className="w-full h-auto object-contain object-bottom"
               />
               {/* Bottom fade */}

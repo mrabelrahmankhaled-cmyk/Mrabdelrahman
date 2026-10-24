@@ -85,7 +85,7 @@ export default function HeroSection() {
             width={800}
             height={850}
             priority={true}
-            unoptimized={true}
+            sizes="(max-width: 768px) 100vw, 55vw"
             className="relative z-10 w-full max-w-[650px] md:max-w-full h-auto object-contain drop-shadow-2xl select-none"
           />
 

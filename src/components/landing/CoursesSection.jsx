@@ -17,7 +17,7 @@ function CourseCard({ title, subtitle, price, date, lessons, image, id }) {
           src={image}
           alt={title}
           fill
-          unoptimized
+          sizes="(max-width: 768px) 100vw, 380px"
           className="object-cover w-full h-full group-hover:scale-110 transition-transform duration-500"
         />
       </div>

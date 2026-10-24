@@ -370,17 +370,24 @@ export const AuthProvider = ({ children, initialUser = null, initialRole = null,
     isMounted.current = true;
 
     const init = async () => {
-        const { data: { session } } = await supabase.auth.getSession();
-        await syncAuthState('INITIAL_SESSION', session);
+        try {
+            const { data: { session } } = await supabase.auth.getSession();
+            if (isMounted.current) {
+                await syncAuthState('INITIAL_SESSION', session);
+            }
+        } catch (err) {
+            console.warn("Auth init notice:", err);
+        }
     };
 
-    init();
+    const timer = setTimeout(init, 0);
 
     const { data: { subscription } } = supabase.auth.onAuthStateChange((event, session) => {
         if (event !== 'INITIAL_SESSION') syncAuthState(event, session);
     });
 
     return () => {
+        clearTimeout(timer);
         isMounted.current = false;
         subscription.unsubscribe();
     };

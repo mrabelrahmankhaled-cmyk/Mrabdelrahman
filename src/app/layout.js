@@ -1,17 +1,13 @@
 import { Cairo } from "next/font/google"; // 👈 استدعاء خط كايرو
 import "./globals.css";
 import { Providers } from "../components/providers";
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import ReactQueryProvider from '../components/ReactQueryProvider';
-
-// 1. تعريف خط كايرو بجميع أوزانه
+// 1. تعريف خط كايرو بالأوزان الأساسية لتحسين سرعة التحميل
 const cairo = Cairo({ 
   subsets: ["arabic"],
-  weight: ["300", "400", "500", "600", "700", "800", "900"],
+  weight: ["400", "600", "700"],
   display: "swap",
 });
-
-const queryClient = new QueryClient();
 
 const baseUrl = process.env.NEXT_PUBLIC_APP_URL || 'https://mr-abdelrahman-khaled.com';
 
